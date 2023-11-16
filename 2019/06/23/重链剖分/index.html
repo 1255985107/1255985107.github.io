@@ -23,7 +23,7 @@
     <meta name="description" content="\(2019.6.29\ update:\)给出了时间复杂度的证明，更新了\(L_AT^EX\)  先引入一个问题： 12给定一颗有n个节点的树，给定根节点每次给出点对(x,y)，查询x到y路径上深度最小的节点(即LCA)。  树  看到这样的题目，大家首先想到的是暴力吧？  从\(x\)出发向上走到根，标记每个经过的节点。 从\(y\)出发向上走，经过的第一个有标记的节点就是&quot;x到y路径上深度最">
 <meta property="og:type" content="blog">
 <meta property="og:title" content="重链剖分">
-<meta property="og:url" content="http://1255985107.github.io/2023/11/15/%E9%87%8D%E9%93%BE%E5%89%96%E5%88%86/index.html">
+<meta property="og:url" content="http://1255985107.github.io/2019/06/23/%E9%87%8D%E9%93%BE%E5%89%96%E5%88%86/index.html">
 <meta property="og:site_name" content="A999999&#39;s Blog">
 <meta property="og:description" content="\(2019.6.29\ update:\)给出了时间复杂度的证明，更新了\(L_AT^EX\)  先引入一个问题： 12给定一颗有n个节点的树，给定根节点每次给出点对(x,y)，查询x到y路径上深度最小的节点(即LCA)。  树  看到这样的题目，大家首先想到的是暴力吧？  从\(x\)出发向上走到根，标记每个经过的节点。 从\(y\)出发向上走，经过的第一个有标记的节点就是&quot;x到y路径上深度最">
 <meta property="og:locale" content="zh_CN">
@@ -34,18 +34,18 @@
 <meta property="og:image" content="https://cdn.luogu.com.cn/upload/pic/53789.png">
 <meta property="og:image" content="https://cdn.luogu.com.cn/upload/pic/58441.png">
 <meta property="og:image" content="https://cdn.luogu.com.cn/upload/pic/58443.png">
-<meta property="article:published_time" content="2023-11-15T12:04:25.000Z">
-<meta property="article:modified_time" content="2023-11-16T12:30:35.746Z">
+<meta property="article:published_time" content="2019-06-23T04:21:01.000Z">
+<meta property="article:modified_time" content="2023-11-16T16:05:07.990Z">
 <meta property="article:author" content="a999999">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://cdn.luogu.com.cn/upload/pic/53670.png">
 
 
-<link rel="canonical" href="http://1255985107.github.io/2023/11/15/%E9%87%8D%E9%93%BE%E5%89%96%E5%88%86/">
+<link rel="canonical" href="http://1255985107.github.io/2019/06/23/%E9%87%8D%E9%93%BE%E5%89%96%E5%88%86/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://1255985107.github.io/2023/11/15/%E9%87%8D%E9%93%BE%E5%89%96%E5%88%86/","path":"2023/11/15/重链剖分/","title":"重链剖分"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://1255985107.github.io/2019/06/23/%E9%87%8D%E9%93%BE%E5%89%96%E5%88%86/","path":"2019/06/23/重链剖分/","title":"重链剖分"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
 <title>重链剖分 | A999999's Blog</title>
@@ -200,10 +200,10 @@
         </div>
         <ul class="links-of-blogroll-list">
             <li class="links-of-blogroll-item">
-              <a href="https://codeforces.com/profile/MaxDYF" title="https:&#x2F;&#x2F;codeforces.com&#x2F;profile&#x2F;MaxDYF" rel="noopener" target="_blank">MaxDYF</a>
+              <a href="https://maxdyf.github.io/" title="https:&#x2F;&#x2F;maxdyf.github.io" rel="noopener" target="_blank">MaxDYF</a>
             </li>
             <li class="links-of-blogroll-item">
-              <a href="https://codeforces.com/profile/Jesselrj" title="https:&#x2F;&#x2F;codeforces.com&#x2F;profile&#x2F;Jesselrj" rel="noopener" target="_blank">Jesselrj</a>
+              <a href="https://jesselrj.github.io/" title="https:&#x2F;&#x2F;jesselrj.github.io" rel="noopener" target="_blank">Jesselrj</a>
             </li>
             <li class="links-of-blogroll-item">
               <a href="https://codeforces.com/profile/Palbudir" title="https:&#x2F;&#x2F;codeforces.com&#x2F;profile&#x2F;Palbudir" rel="noopener" target="_blank">Palbudir</a>
@@ -233,7 +233,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://1255985107.github.io/2023/11/15/%E9%87%8D%E9%93%BE%E5%89%96%E5%88%86/">
+    <link itemprop="mainEntityOfPage" href="http://1255985107.github.io/2019/06/23/%E9%87%8D%E9%93%BE%E5%89%96%E5%88%86/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/Yamada_Ryo.jpg">
@@ -262,14 +262,14 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2023-11-15 20:04:25" itemprop="dateCreated datePublished" datetime="2023-11-15T20:04:25+08:00">2023-11-15</time>
+      <time title="创建时间：2019-06-23 12:21:01" itemprop="dateCreated datePublished" datetime="2019-06-23T12:21:01+08:00">2019-06-23</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-11-16 20:30:35" itemprop="dateModified" datetime="2023-11-16T20:30:35+08:00">2023-11-16</time>
+      <time title="修改时间：2023-11-17 00:05:07" itemprop="dateModified" datetime="2023-11-17T00:05:07+08:00">2023-11-17</time>
     </span>
 
   
@@ -496,7 +496,7 @@ Code
   </li>
   <li class="post-copyright-link">
       <strong>本文链接：</strong>
-      <a href="http://1255985107.github.io/2023/11/15/%E9%87%8D%E9%93%BE%E5%89%96%E5%88%86/" title="重链剖分">http://1255985107.github.io/2023/11/15/重链剖分/</a>
+      <a href="http://1255985107.github.io/2019/06/23/%E9%87%8D%E9%93%BE%E5%89%96%E5%88%86/" title="重链剖分">http://1255985107.github.io/2019/06/23/重链剖分/</a>
   </li>
   <li class="post-copyright-license">
       <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -509,11 +509,11 @@ Code
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2023/11/15/%E6%89%B9%E5%88%A4%E6%80%A7%E6%80%9D%E7%BB%B4%E7%AC%94%E8%AE%B0/" rel="prev" title="批判性思维笔记">
-                  <i class="fa fa-angle-left"></i> 批判性思维笔记
-                </a>
             </div>
             <div class="post-nav-item">
+                <a href="/2023/11/15/hello-world/" rel="next" title="Hello World">
+                  Hello World <i class="fa fa-angle-right"></i>
+                </a>
             </div>
           </div>
     </footer>
