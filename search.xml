@@ -1,6 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>CCPC Final 2023 J Solution</title>
+    <url>/2024/04/16/CCPC-Final-2023-J-Solution/</url>
+    <content><![CDATA[<p>本文讨论 CCPC Final 2023 J 的与官方解法（from Lynkcat）略有区别的线性解法。</p>
+<p>题目传送门：<a href="https://contest.ucup.ac/contest/1596/problem/8551">CCPC Final 2023 J</a></p>
+<p>题解视频传送门：<a href="https://www.bilibili.com/video/BV17m411z7Am/?t=1820">第九届 CCPC 总决赛题解</a></p>
+<span id="more"></span>
+<p>我们设给出的序列为 <span class="math inline">\(q\)</span>。</p>
+<p><span class="math inline">\(q_1\)</span> 是一个特殊的点，因为它的所有祖先构成了一条链，这条链上的点的儿子可以不出现在合法的子段中。</p>
+<p>构造方法：所有没有出现的儿子，把它们的子树整个地放在这个点的后面、<span class="math inline">\(q_1\)</span> 的前面。</p>
+<p>同时要指出，合法的子段就是取出这条链的一些儿子，按深度递减的顺序排列，然后按这个顺序链接它们子树的 DFS 序。</p>
+<p>假设我们处理到 <span class="math inline">\(q_i\)</span>。 不妨设 <span class="math inline">\(x = q_{i - 1}, y = q_i\)</span>，一样地讨论两者的关系。</p>
+<h3 id="y-在-x-子树内"><span class="math inline">\(y\)</span> 在 <span class="math inline">\(x\)</span> 子树内</h3>
+<p>这个时候 <span class="math inline">\(y\)</span> 必须是 <span class="math inline">\(x\)</span> 的儿子，否则从 <span class="math inline">\(x\)</span> 到 <span class="math inline">\(y\)</span> 中间一定经过一个点 <span class="math inline">\(p\)</span>，使得 <span class="math inline">\(p\)</span> 是 <span class="math inline">\(x\)</span> 的儿子且是 <span class="math inline">\(y\)</span> 的祖先。</p>
+<p>这个条件还是很好判断的。</p>
+<h3 id="y-不在-x-子树内"><span class="math inline">\(y\)</span> 不在 <span class="math inline">\(x\)</span> 子树内</h3>
+<p>这个情况一般就是结束了某个子树的遍历，跳到另一个子树内了。</p>
+<p>我们知道，从 <span class="math inline">\(x\)</span> 到 <span class="math inline">\(y\)</span> 如果有 <span class="math inline">\(k\)</span> 条向下的边，那么 <span class="math inline">\(x\)</span> 和 <span class="math inline">\(y\)</span> 在 DFS 序上的距离至少为 <span class="math inline">\(k - 1\)</span>。</p>
+<p>所以这个时候只能有 <span class="math inline">\(1\)</span> 条向下的边，那么 <span class="math inline">\(y\)</span> 的父亲就会落在 <span class="math inline">\(1\)</span> 到 <span class="math inline">\(x\)</span> 的路径上，是 <span class="math inline">\(x\)</span> 的祖先，这个点记为 <span class="math inline">\(p\)</span>。</p>
+<p>从 <span class="math inline">\(x\)</span> 回溯到 <span class="math inline">\(p\)</span>，意味着 <span class="math inline">\(p\)</span> 子树内的点不能再被遍历了，我们就要判断它们是否有遗漏的点需要放在 <span class="math inline">\(x\)</span> 和 <span class="math inline">\(y\)</span> 之间。</p>
+<p>注意特殊链上的点可以遗漏一些儿子，所以我们先考虑 <span class="math inline">\(p\)</span> 不在特殊链上，<span class="math inline">\(x\)</span> 到 <span class="math inline">\(p\)</span> 中被访问的点的子树。</p>
+<p>我们维护一个栈表示 <span class="math inline">\(1\)</span> 到 <span class="math inline">\(x\)</span> 路径上，在子段中（被访问过）的点 <span class="math inline">\(st_p\)</span>。同时记录它们子树中被访问过的点的个数 <span class="math inline">\(cnt_p\)</span>。</p>
+<p>这里需要预处理每个点的子树大小 <span class="math inline">\(size_x\)</span>。对于栈顶，如果 <span class="math inline">\(cnt_p \neq size_{st_p}\)</span>，说明 <span class="math inline">\(st_p\)</span> 子树不满，不合法。</p>
+<p>否则将 <span class="math inline">\(st_p\)</span> 弹出，<span class="math inline">\(cnt_p\)</span> 加到新的栈顶 <span class="math inline">\(st_p^{\prime}\)</span> 的 <span class="math inline">\(cnt_p^{\prime}\)</span>，<span class="math inline">\(st_p^{\prime}\)</span> 一定是 <span class="math inline">\(st_p\)</span> 的父亲。</p>
+<p>注意栈中的 <span class="math inline">\(p\)</span> 不需要检查或弹出。完成之后插入 <span class="math inline">\(y\)</span> 即可。</p>
+<p>如果 <span class="math inline">\(p\)</span> 在特殊链上，栈中就不存在 <span class="math inline">\(p\)</span>。这种情况下，我们逐个检查和弹出整个栈即可。</p>
+<p>再来讨论 <span class="math inline">\(p\)</span> 在特殊链上的情况。</p>
+<p>每当出现这种情况，<span class="math inline">\(y, p\)</span> 的深度一定不减，而且同深度的 <span class="math inline">\(y\)</span> 显然是同一个 <span class="math inline">\(p\)</span> 的儿子。</p>
+<p>所以当出现 <span class="math inline">\(y\)</span> 深度增大时不合法。</p>
+<p>会不会出现同一个儿子多次访问呢？考虑这个儿子 <span class="math inline">\(y\)</span> 在不在特殊链上。</p>
+<p>如果 <span class="math inline">\(y\)</span> 不在特殊链上，进入 <span class="math inline">\(y\)</span> 时一定要访问 <span class="math inline">\(y\)</span>，我们的标记可以帮助排除。</p>
+<p>如果 <span class="math inline">\(y\)</span> 在特殊链上，则访问 <span class="math inline">\(q_1\)</span> 时已经访问了 <span class="math inline">\(y\)</span>，一定不合法。</p>
+<p>实现中要注意：</p>
+<ol type="1">
+<li><p>是否被访问的标记应该采用撤销的方式清除，这样总的复杂度才能保持 <span class="math inline">\(O(\sum k)\)</span> 而不退化为 <span class="math inline">\(O(nQ)\)</span>。</p></li>
+<li><p>可以预处理一个 DFS 序用于判断点对 <span class="math inline">\((x, y)\)</span> 是否构成祖先与后代的关系。</p></li>
+</ol>
+<h3 id="代码">代码</h3>
+<details class="note info no-icon"><summary><p>Code</p>
+</summary>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="keyword">namespace</span> Input&#123;</span><br><span class="line">	<span class="type">const</span> <span class="type">int</span> BUFFLEN = <span class="number">1</span> &lt;&lt; <span class="number">20</span>;</span><br><span class="line">	<span class="type">char</span> buf[BUFFLEN | <span class="number">2</span>], *p1 = buf, *p2 = buf;</span><br><span class="line">	<span class="function"><span class="keyword">inline</span> <span class="type">char</span> <span class="title">getc</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="keyword">if</span>(p1 == p2)</span><br><span class="line">			p1 = buf,</span><br><span class="line">			p2 = buf + <span class="built_in">fread</span>(buf, <span class="number">1</span>, BUFFLEN, stdin);</span><br><span class="line">		<span class="keyword">return</span> p1 == p2? EOF: *p1++;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">inline</span> <span class="type">bool</span> <span class="title">isdgt</span><span class="params">(<span class="type">const</span> <span class="type">char</span> op)</span></span>&#123;<span class="keyword">return</span> op &gt;= <span class="string">&#x27;0&#x27;</span> &amp;&amp; op &lt;= <span class="string">&#x27;9&#x27;</span>;&#125;</span><br><span class="line">	<span class="function"><span class="type">long</span> <span class="type">long</span> <span class="title">read</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="type">static</span> <span class="type">long</span> <span class="type">long</span> res; <span class="type">static</span> <span class="type">char</span> op, f;</span><br><span class="line">		<span class="keyword">for</span>(f = <span class="number">0</span>, op = <span class="built_in">getc</span>(); !<span class="built_in">isdgt</span>(op); op = <span class="built_in">getc</span>()) f |= (op == <span class="string">&#x27;-&#x27;</span>);</span><br><span class="line">		<span class="keyword">for</span>(res = <span class="number">0</span>; <span class="built_in">isdgt</span>(op); op = <span class="built_in">getc</span>()) res = res * <span class="number">10</span> + (op ^ <span class="string">&#x27;0&#x27;</span>);</span><br><span class="line">		<span class="keyword">return</span> f? -res: res;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">using</span> Input::read;</span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> ll;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> N = <span class="number">100010</span>;</span><br><span class="line"><span class="type">int</span> head[N], ver[N &lt;&lt; <span class="number">1</span>], nxt[N &lt;&lt; <span class="number">1</span>], tot = <span class="number">1</span>;</span><br><span class="line"><span class="type">int</span> fa[N], dep[N], siz[N];</span><br><span class="line"><span class="type">int</span> dfn[N], num;</span><br><span class="line"><span class="type">bool</span> vis[N];</span><br><span class="line"><span class="type">int</span> q[N * <span class="number">10</span>], n;</span><br><span class="line"><span class="type">int</span> sta[N], sum[N], tp;</span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="type">void</span> <span class="title">addedge</span><span class="params">(<span class="type">int</span> x, <span class="type">int</span> y)</span></span>&#123;</span><br><span class="line">	ver[++tot] = y; nxt[tot] = head[x]; head[x] = tot;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">dfs</span><span class="params">(<span class="type">int</span> x)</span></span>&#123;</span><br><span class="line">	dfn[x] = ++num;</span><br><span class="line">	siz[x] = <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> k = head[x], y; y = ver[k], k; k = nxt[k])&#123;</span><br><span class="line">		<span class="keyword">if</span>(y == fa[x]) <span class="keyword">continue</span>;</span><br><span class="line">		fa[y] = x;</span><br><span class="line">		dep[y] = dep[x] + <span class="number">1</span>;</span><br><span class="line">		<span class="built_in">dfs</span>(y);</span><br><span class="line">		siz[x] += siz[y];</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">chkson</span><span class="params">(<span class="type">int</span> x, <span class="type">int</span> y)</span></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> dfn[x] &lt; dfn[y] &amp;&amp; dfn[y] &lt; dfn[x] + siz[x];</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">push</span><span class="params">(<span class="type">int</span> x)</span></span>&#123;</span><br><span class="line">	tp++;</span><br><span class="line">	vis[x] = <span class="number">1</span>;</span><br><span class="line">	sta[tp] = x;</span><br><span class="line">	sum[tp] = <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">solve</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="type">int</span> m = <span class="built_in">read</span>(), ans = <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>; i &lt;= m; ++i)</span><br><span class="line">		q[i] = <span class="built_in">read</span>();</span><br><span class="line">	tp = <span class="number">0</span>;</span><br><span class="line">	sum[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">	<span class="built_in">push</span>(q[<span class="number">1</span>]);</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">2</span>, x, y = q[<span class="number">1</span>], mind = dep[q[<span class="number">1</span>]]; x = y, y = q[i], i &lt;= m &amp;&amp; ans; ++i)</span><br><span class="line">	<span class="keyword">if</span>(vis[y] || <span class="built_in">chkson</span>(y, q[<span class="number">1</span>])) ans = <span class="number">0</span>;<span class="comment">// y visited or is on the virtual list</span></span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(<span class="built_in">chkson</span>(x, y))&#123;<span class="comment">// y is son of x</span></span><br><span class="line">		<span class="keyword">if</span>(dep[y] != dep[x] + <span class="number">1</span>) ans = <span class="number">0</span>;</span><br><span class="line">		<span class="built_in">push</span>(y);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span>&#123;</span><br><span class="line">		<span class="type">int</span> t = fa[y];</span><br><span class="line">		<span class="keyword">if</span>(!<span class="built_in">chkson</span>(t, x)) ans = <span class="number">0</span>;<span class="comment">// t must be the ancestor of x</span></span><br><span class="line">		<span class="keyword">if</span>(siz[x] != <span class="number">1</span>) ans = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">while</span>(tp)&#123;</span><br><span class="line">			<span class="keyword">if</span>(sum[tp] != siz[sta[tp]]) ans = <span class="number">0</span>;<span class="comment">// subtree shoud be fully visited</span></span><br><span class="line">			sum[tp - <span class="number">1</span>] += sum[tp];</span><br><span class="line">			<span class="keyword">if</span>(<span class="built_in">chkson</span>(y, sta[tp])) ans = <span class="number">0</span>;</span><br><span class="line">			<span class="keyword">if</span>(sta[--tp] == t) <span class="keyword">break</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span>(!vis[t])&#123;<span class="comment">// t is on the virtual list</span></span><br><span class="line">			<span class="keyword">if</span>(dep[y] &gt; mind) ans = <span class="number">0</span>;</span><br><span class="line">			<span class="keyword">if</span>(mind &gt; dep[y]) mind = dep[y];</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="built_in">push</span>(y);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>; i &lt;= m; ++i)</span><br><span class="line">		vis[q[i]] = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">signed</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span> **argv)</span></span>&#123;</span><br><span class="line">	n = <span class="built_in">read</span>(); <span class="type">int</span> T = <span class="built_in">read</span>();</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>, x, y; i &lt; n; ++i)&#123;</span><br><span class="line">		x = <span class="built_in">read</span>(); y = <span class="built_in">read</span>();</span><br><span class="line">		<span class="built_in">addedge</span>(x, y); <span class="built_in">addedge</span>(y, x);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">dfs</span>(<span class="number">1</span>);</span><br><span class="line">	<span class="keyword">while</span>(T--)</span><br><span class="line">		<span class="built_in">puts</span>(<span class="built_in">solve</span>()? <span class="string">&quot;Yes&quot;</span>: <span class="string">&quot;No&quot;</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</details>
+<link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>]]></content>
+      <categories>
+        <category>UCUP</category>
+      </categories>
+      <tags>
+        <tag>Solution</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Codeforces Round 936 (Div. 2) Solution</title>
     <url>/2024/03/23/Codeforces-Round-936-Div-2-Solution/</url>
     <content><![CDATA[<p>目前进度：</p>
@@ -155,7 +206,6 @@
 <link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>]]></content>
       <categories>
         <category>Codeforces</category>
-        <category>Contest</category>
       </categories>
       <tags>
         <tag>Solution</tag>
@@ -290,7 +340,6 @@
 <link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>]]></content>
       <categories>
         <category>Codeforces</category>
-        <category>Contest</category>
       </categories>
       <tags>
         <tag>Solution</tag>
@@ -432,7 +481,6 @@ g_x = \sum_{y \in \mathrm{son}(x)} (f_y + g_y - 1)
 <link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>]]></content>
       <categories>
         <category>Codeforces</category>
-        <category>Contest</category>
       </categories>
       <tags>
         <tag>Solution</tag>
@@ -612,7 +660,6 @@ g_x = \sum_{y \in \mathrm{son}(x)} (f_y + g_y - 1)
 <link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>]]></content>
       <categories>
         <category>Codeforces</category>
-        <category>Contest</category>
       </categories>
       <tags>
         <tag>Solution</tag>
@@ -662,7 +709,6 @@ g_x = \sum_{y \in \mathrm{son}(x)} (f_y + g_y - 1)
 <link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>]]></content>
       <categories>
         <category>Codeforces</category>
-        <category>Contest</category>
       </categories>
       <tags>
         <tag>Solution</tag>
