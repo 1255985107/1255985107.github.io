@@ -18,8 +18,8 @@ http://1255985107.github.io/404.html
 http://1255985107.github.io/
 http://1255985107.github.io/tags/gossip/
 http://1255985107.github.io/tags/solution/
-http://1255985107.github.io/tags/UCUP/
 http://1255985107.github.io/tags/Codeforces/
+http://1255985107.github.io/tags/UCUP/
 http://1255985107.github.io/tags/Discrete-Mathematics/
 http://1255985107.github.io/tags/Tutorial/
 http://1255985107.github.io/categories/none/
