@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.0.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon_64x64_next.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon_16x16_next.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Serif+SC:300,300italic,400,400italic,700,700italic%7COxygen+Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.jerryhzy.top","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"default"},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"giscus","storage":true,"lazyload":true,"nav":null,"activeClass":"giscus"},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"manual","top_n_per_article":3,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Basic Structures: Sets, Functions, Sequences, and Sums">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="Discrete Mathematics Note Chapter 2">
+<meta property="og:url" content="https://blog.jerryhzy.top/2024/06/14/Discrete-Mathematics-Note-Chapter-2/index.html">
+<meta property="og:site_name" content="A999999&#39;s Blog">
+<meta property="og:description" content="Basic Structures: Sets, Functions, Sequences, and Sums">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-06-13T16:27:17.000Z">
+<meta property="article:modified_time" content="2024-06-13T16:49:46.793Z">
+<meta property="article:author" content="a999999">
+<meta property="article:tag" content="Discrete Mathematics">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://blog.jerryhzy.top/2024/06/14/Discrete-Mathematics-Note-Chapter-2/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://blog.jerryhzy.top/2024/06/14/Discrete-Mathematics-Note-Chapter-2/","path":"2024/06/14/Discrete-Mathematics-Note-Chapter-2/","title":"Discrete Mathematics Note Chapter 2"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Discrete Mathematics Note Chapter 2 | A999999's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">A999999's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-课程笔记"><a href="/note/" rel="section"><i class="fas fa-book fa-fw"></i>课程笔记</a></li><li class="menu-item menu-item-算法竞赛"><a href="/contest/" rel="section"><i class="fas fa-chart-simple fa-fw"></i>算法竞赛</a></li><li class="menu-item menu-item-友链"><a href="/friendlink/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-盘"><a href="http://pan.jerryhzy.top:5244/" rel="section" target="_blank"><i class="fas fa-cloud fa-fw"></i>盘</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#basic-structures-sets-functions-sequences-and-sums"><span class="nav-number">1.</span> <span class="nav-text">Basic Structures: Sets, Functions, Sequences, and Sums</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#sets"><span class="nav-number">1.1.</span> <span class="nav-text">Sets</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#four-ways-to-describe"><span class="nav-number">1.1.1.</span> <span class="nav-text">Four ways to describe</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#relations-between-two-sets"><span class="nav-number">1.1.2.</span> <span class="nav-text">Relations between Two Sets</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#set-operations"><span class="nav-number">1.2.</span> <span class="nav-text">Set operations</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#operation-names"><span class="nav-number">1.2.1.</span> <span class="nav-text">Operation Names</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#set-identities"><span class="nav-number">1.2.2.</span> <span class="nav-text">Set Identities</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#computer-representations"><span class="nav-number">1.2.3.</span> <span class="nav-text">Computer Representations</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#functions"><span class="nav-number">1.3.</span> <span class="nav-text">Functions</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#definition"><span class="nav-number">1.3.1.</span> <span class="nav-text">Definition</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#graph-of-functions"><span class="nav-number">1.3.2.</span> <span class="nav-text">Graph of Functions</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#injective-surjective-functions"><span class="nav-number">1.3.3.</span> <span class="nav-text">Injective &amp; Surjective Functions</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#monotonic-function"><span class="nav-number">1.3.4.</span> <span class="nav-text">Monotonic Function</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#inverse-functions"><span class="nav-number">1.3.5.</span> <span class="nav-text">Inverse Functions</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#composition"><span class="nav-number">1.3.6.</span> <span class="nav-text">Composition</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#simple-important-functions"><span class="nav-number">1.3.7.</span> <span class="nav-text">Simple Important Functions</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#properties"><span class="nav-number">1.3.7.1.</span> <span class="nav-text">Properties</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sequence-and-summations"><span class="nav-number">1.4.</span> <span class="nav-text">Sequence and Summations</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#definition-1"><span class="nav-number">1.4.1.</span> <span class="nav-text">Definition</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#geometric-progression"><span class="nav-number">1.4.2.</span> <span class="nav-text">Geometric Progression</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#arithmetic-progression"><span class="nav-number">1.4.3.</span> <span class="nav-text">Arithmetic Progression</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#summation"><span class="nav-number">1.4.4.</span> <span class="nav-text">Summation</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#useful-closed-form"><span class="nav-number">1.4.4.1.</span> <span class="nav-text">Useful Closed Form</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#the-cardinality-of-an-infinite-set"><span class="nav-number">1.5.</span> <span class="nav-text">The cardinality of an infinite set</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#definition-2"><span class="nav-number">1.5.1.</span> <span class="nav-text">Definition</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#amazing-conclusions"><span class="nav-number">1.5.2.</span> <span class="nav-text">Amazing conclusions</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#property"><span class="nav-number">1.5.3.</span> <span class="nav-text">Property</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cantor-diagonalization-argument"><span class="nav-number">1.5.4.</span> <span class="nav-text">Cantor Diagonalization Argument</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#computability"><span class="nav-number">1.5.5.</span> <span class="nav-text">Computability</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="a999999"
+      src="/images/Yamada_Ryo3.jpg">
+  <p class="site-author-name" itemprop="name">a999999</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/1255985107" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;1255985107" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:jerryhzy@outlook.com" title="E-Mail → mailto:jerryhzy@outlook.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://blog.jerryhzy.top/2024/06/14/Discrete-Mathematics-Note-Chapter-2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/Yamada_Ryo3.jpg">
+      <meta itemprop="name" content="a999999">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="A999999's Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Discrete Mathematics Note Chapter 2 | A999999's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Discrete Mathematics Note Chapter 2
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2024-06-14 00:27:17 / 修改时间：00:49:46" itemprop="dateCreated datePublished" datetime="2024-06-14T00:27:17+08:00">2024-06-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/note/" itemprop="url" rel="index"><span itemprop="name">note</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.6k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>6 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="basic-structures-sets-functions-sequences-and-sums">Basic Structures: Sets, Functions, Sequences, and Sums</h1>
+<span id="more"></span>
+<h2 id="sets">Sets</h2>
+<p>Definition: A <strong>set</strong> is an unordered collection of objects. The objects in are called <strong>elements</strong>. It is said to <strong>contain</strong> its elements.</p>
+<p><span class="math inline">\(a \in A\)</span>: Element <span class="math inline">\(a\)</span> belongs to set <span class="math inline">\(A\)</span>.</p>
+<h3 id="four-ways-to-describe">Four ways to describe</h3>
+<ol type="1">
+<li>Roster method: listing elements between braces. $S = {1, 2, 3,} $</li>
+<li>Brace notation with ellipses <span class="math inline">\(S = \{1, 2, \ldots, 100\}\)</span></li>
+<li>Specification using set builder: <span class="math inline">\(S = \{x | P(x)\}\)</span></li>
+<li>Venn diagrams:
+<ol type="1">
+<li><span class="math inline">\(U\)</span> is represented in rectangle.</li>
+<li>Different sets represented in circles in the rectangle.</li>
+</ol></li>
+</ol>
+<p><span class="math inline">\(\emptyset\)</span>: Empty set, a set that contains nothing.</p>
+<p><span class="math inline">\(U\)</span>: Universal set, containing all objects.</p>
+<h3 id="relations-between-two-sets">Relations between Two Sets</h3>
+<p><strong>Subset</strong>: <span class="math inline">\(A \subseteq B\)</span></p>
+<p>​ <span class="math inline">\(\emptyset \subseteq A, A\subseteq A\)</span>.</p>
+<p><strong>Proper Subset</strong>: <span class="math inline">\(A \subset B \Leftrightarrow (A \subseteq B\ \land\ A \neq B)\)</span>.</p>
+<p><strong>Equal</strong>: <span class="math inline">\(A = B \Leftrightarrow (A \subseteq B\ \land \ B\subseteq A)\)</span>.</p>
+<p><strong>Size</strong>: If there are exactly <span class="math inline">\(n\)</span> elements in <span class="math inline">\(S\)</span>, we call <span class="math inline">\(S\)</span> is <strong>finite</strong> and <span class="math inline">\(n\)</span> is the <strong>cardinality</strong> of <span class="math inline">\(S\)</span>.</p>
+<p><strong>Power Set</strong>: The set containing all subsets of a given set. Attention, its elements are sets.</p>
+<p>​ <span class="math inline">\(P(S) = \{X | X \subseteq S\}\)</span>.</p>
+<p>​ <span class="math inline">\(|P| = 2^{|S|}\)</span>, so if <span class="math inline">\(S\)</span> is finite, then <span class="math inline">\(P\)</span> is finite.</p>
+<p>​ Five rules: <span class="math inline">\(x \in P(S) \Rightarrow x \subseteq S\)</span>; $x S {x} P(S) $; <span class="math inline">\(S \in P(S)\)</span>.</p>
+<p>​ <span class="math inline">\(P(A) \in P(B) \Rightarrow A \in B\)</span>; <span class="math inline">\(A \subseteq B \Rightarrow P(A) \subseteq P(B)\)</span>.</p>
+<p>The <strong>ordered n-tuple</strong> <span class="math inline">\((a_1, a_2, \ldots, a_n)\)</span>. <span class="math inline">\((x, y) \neq (y, x)\)</span>.</p>
+<p>The <strong>Cartesian product</strong> of two sets: <span class="math inline">\(A \times B = \{(a, b) | a \in A \land b \in B\}\)</span></p>
+<p><strong>Truth Set</strong> of predicate <span class="math inline">\(P\)</span> in domain <span class="math inline">\(D\)</span> is <span class="math inline">\(\{x | P(x)\}\)</span>.</p>
+<h2 id="set-operations">Set operations</h2>
+<h3 id="operation-names">Operation Names</h3>
+<p><strong>Union</strong>: <span class="math inline">\(A \bigcup B = \{x | x \in A \lor x\in B\}\)</span>.</p>
+<p><strong>Intersection</strong>: <span class="math inline">\(A \bigcap B = \{x | x\in A \land x \in B\}\)</span>. If <span class="math inline">\(A \bigcap B = \emptyset\)</span>, then we call they are <strong>disjoint</strong>.</p>
+<p><span class="math inline">\(|A \bigcup B| = |A| + |B| - |A \bigcap B|\)</span>.</p>
+<p><strong>Difference</strong>: $ A - B = {x | x A x B} = A B$.</p>
+<p><strong>Complement</strong>: <span class="math inline">\(\overline A = \{x | x \notin A \land x \in U\} = U - A\)</span>.</p>
+<p><strong>Symmetric Difference</strong>: $A B = (A B) - (A B) $.</p>
+<h3 id="set-identities">Set Identities</h3>
+<p>Four ways to prove:</p>
+<ol type="1">
+<li>show that <span class="math inline">\(A \subseteq B\)</span> and <span class="math inline">\(B \subseteq A\)</span>.</li>
+<li>Use logical equivalence to prove equivalent set definitions.</li>
+<li>Use membership tables (like truth table).</li>
+<li>Use previously proven identities.</li>
+</ol>
+<p>Some proven identities:</p>
+<ol type="1">
+<li>De Morgan's laws: <span class="math inline">\(\overline {(A \bigcup B)} = \overline{A} \bigcap \overline{B}\)</span>; <span class="math inline">\(\overline {(A \bigcap B)} = \overline{A} \bigcup \overline{B}\)</span>.</li>
+<li>Distributive laws: <span class="math inline">\(A \bigcup (B \bigcap C) = (A \bigcup B) \bigcap (A \bigcup C)\)</span>; <span class="math inline">\(A \bigcap (B \bigcup C) = (A \bigcap B) \bigcup (A \bigcap C)\)</span>.</li>
+</ol>
+<h3 id="computer-representations">Computer Representations</h3>
+<p>Use bit strings to represent.</p>
+<p>First we know <span class="math inline">\(U = {a_1, a_2, a_3 ,\ldots}\)</span>, and <span class="math inline">\(|U| = n\)</span>.</p>
+<p>Then we can use a bit string <span class="math inline">\(s\)</span> of length <span class="math inline">\(n\)</span> to represent any set, <span class="math inline">\(s_i = 1\)</span> if <span class="math inline">\(a_i\)</span> is in this set.</p>
+<h2 id="functions">Functions</h2>
+<h3 id="definition">Definition</h3>
+<p>A <strong>function(mapping)</strong> <span class="math inline">\(f\)</span> from <span class="math inline">\(A\)</span> to <span class="math inline">\(B\)</span>: <span class="math display">\[
+f : A \rightarrow B\\
+\forall a \exists! b (a \in A \rightarrow b \in B \land f(a) = b )
+\]</span> <span class="math inline">\(A\)</span> is called the <strong>domain</strong>, <span class="math inline">\(B\)</span> is called <strong>codomain</strong>.</p>
+<p><span class="math inline">\(f(a) = b\)</span>, then <span class="math inline">\(b\)</span> is called <strong>image</strong> of <span class="math inline">\(a\)</span>, <span class="math inline">\(a\)</span> is called <strong>preimage</strong> of <span class="math inline">\(b\)</span>.</p>
+<p><span class="math inline">\(f(A) = \{f(a) | a \in A\}\)</span> is called <strong>range</strong>, and it's a subset of <span class="math inline">\(B\)</span>.</p>
+<p>If <span class="math inline">\(f\)</span> is a function, we can call f <strong>maps</strong> <span class="math inline">\(A\)</span> to <span class="math inline">\(B\)</span>.</p>
+<p><span class="math inline">\(f(\emptyset) = \emptyset\)</span>, <span class="math inline">\(f(\{ a \}) = \{ f(a) \}\)</span>.</p>
+<p><span class="math inline">\(f(A \bigcup B) = f(A) \bigcup f(B)\)</span>.</p>
+<p><span class="math inline">\(f(A \bigcap B) \subseteq f(A) \bigcap f(B)\)</span>.</p>
+<h3 id="graph-of-functions">Graph of Functions</h3>
+<p>The <strong>graph</strong> of the function <span class="math inline">\(f\)</span> is the set <span class="math inline">\(\{ (a, b) | a \in A \land b = f(a) \}\)</span>.</p>
+<h3 id="injective-surjective-functions">Injective &amp; Surjective Functions</h3>
+<p><strong>Injective</strong> (One-to-one) functions hold that <span class="math display">\[
+\forall a \forall b (f(a) = f(b) \rightarrow a = b )
+\]</span> That is, every element in domain has a unique image.</p>
+<p><strong>Surjective</strong> (Onto) functions hold that <span class="math display">\[
+\forall b \in B \exists a \in A (f(a) = b)
+\]</span> That is, every element in codomain has at least one preimage.</p>
+<p><strong>Bijection</strong> (One-to-one correspondence) is both one-to-one and onto.</p>
+<p>Bijection's domain and codomain must have the same <strong>cardinality</strong>.</p>
+<h3 id="monotonic-function">Monotonic Function</h3>
+<p>Monotonically (strictly) increasing: <span class="math inline">\(x &lt; y \rightarrow f(x) &lt; f(y)\)</span>.</p>
+<p>Monotonically (strictly) decreasing: <span class="math inline">\(x &lt; y \rightarrow f(x) &gt; f(y)\)</span>.</p>
+<h3 id="inverse-functions">Inverse Functions</h3>
+<p>If <span class="math inline">\(f\)</span> is a bijection, the <strong>inverse function</strong> of <span class="math inline">\(f\)</span> can be defined as <span class="math inline">\(f^{-1}\)</span>, that <span class="math inline">\(f^{-1}(y) = x\ \mathrm{iff}\ f(x) = y\)</span>. <span class="math inline">\((f^{-1})^{-1} = f\)</span>.</p>
+<p>Otherwise, the inversion doesn't exist.</p>
+<h3 id="composition">Composition</h3>
+<p>Let <span class="math inline">\(g\)</span> be a function from <span class="math inline">\(A\)</span> to <span class="math inline">\(B\)</span>, and <span class="math inline">\(f\)</span> be a function from <span class="math inline">\(B\)</span> to <span class="math inline">\(C\)</span>. Then the <strong>composition</strong> of <span class="math inline">\(g\)</span> and <span class="math inline">\(f\)</span> is <span class="math display">\[
+f\ \circ\ g (a) = f(g(a))
+\]</span> The range of <span class="math inline">\(g\)</span> must be a subset of the domain of <span class="math inline">\(f\)</span>.</p>
+<h3 id="simple-important-functions">Simple Important Functions</h3>
+<p>Floor Function <span class="math inline">\(\lfloor x \rfloor\)</span> (greatest integer below <span class="math inline">\(x\)</span>) and Ceiling Function <span class="math inline">\(\lceil x \rceil\)</span> (least integer above <span class="math inline">\(x\)</span>) are commonly used.</p>
+<h4 id="properties">Properties</h4>
+<details class="note info no-icon"><summary><p>Floor Properties</p>
+</summary>
+<ul>
+<li><span class="math inline">\(x - 1 &lt; \lfloor x \rfloor \leq x \leq \lceil x \rceil &lt; x + 1\)</span>.</li>
+<li><span class="math inline">\(\lfloor -x \rfloor = - \lceil x \rceil\)</span>.</li>
+<li><span class="math inline">\(\lceil -x \rceil = - \lfloor x \rfloor\)</span>.</li>
+<li><span class="math inline">\(\lfloor x + m \rfloor = \lfloor x \rfloor + m, \lceil x + m \rceil = \lceil x \rceil + m\)</span>, if <span class="math inline">\(m\)</span> is an integer.</li>
+</ul>
+
+</details>
+<h2 id="sequence-and-summations">Sequence and Summations</h2>
+<h3 id="definition-1">Definition</h3>
+<p>A <strong>sequence</strong> is a function from a subset of the set of integers <span class="math inline">\([N]\)</span> to a set <span class="math inline">\(S\)</span>. We use the notation <span class="math inline">\(a_n\)</span> to denote <span class="math inline">\(f(n)\)</span>.</p>
+<p>Note that the order in a sequence matters.</p>
+<h3 id="geometric-progression">Geometric Progression</h3>
+<p>A sequence of the form <span class="math inline">\(a, aq, aq^2, \dots, aq^{n-1}\)</span>.</p>
+<h3 id="arithmetic-progression">Arithmetic Progression</h3>
+<p>A sequence of the form <span class="math inline">\(a, a + d, a + 2d, \ldots, a + (n - 1)d\)</span>.</p>
+<h3 id="summation">Summation</h3>
+<p><span class="math display">\[
+\sum_{i=m} ^n a_i,\quad \sum _{x\in S} f(x)
+\]</span></p>
+<p><span class="math inline">\(m\)</span>: lower bound, <span class="math inline">\(n\)</span>: upper bound, <span class="math inline">\(i\)</span>: index of summation;</p>
+<p><span class="math inline">\(S\)</span> should be a subset of the domain of <span class="math inline">\(f\)</span>.</p>
+<h4 id="useful-closed-form">Useful Closed Form</h4>
+<ol type="1">
+<li><p><span class="math inline">\(\large\sum\limits_{k = 0}^{n} ar^k = a \dfrac{r^{n + 1} - 1}{r - 1} (r \neq 0, 1)\)</span>.</p></li>
+<li><p><span class="math inline">\(\large\sum\limits_{k = 1}^n k^2 = \dfrac{n (n + 1) (2n + 1)}{6}\)</span>.</p></li>
+<li><p><span class="math inline">\(\large \sum \limits_{k = 1}^{n} k^3 = \dfrac{n^2 (n + 1)^2}{4} = \left(\dfrac{n (n + 1)}{2}\right)^2\)</span>.</p></li>
+</ol>
+<h2 id="the-cardinality-of-an-infinite-set">The cardinality of an infinite set</h2>
+<h3 id="definition-2">Definition</h3>
+<p>The cardinality of a set <span class="math inline">\(A\)</span> is <strong>equal</strong> to the cardinality of a set <span class="math inline">\(B\)</span>, denoted <span class="math inline">\(|A| = |B|\)</span>, <span class="math inline">\(\mathrm{iff}\)</span> there exists a bijection from <span class="math inline">\(A\)</span> to <span class="math inline">\(B\)</span>.</p>
+<p>If there is an injection from <span class="math inline">\(A\)</span> to <span class="math inline">\(B\)</span>, then we have <span class="math inline">\(|A| \le |B|\)</span>. And if they have different cardinality, we say <span class="math inline">\(|A| &lt; |B|\)</span>.</p>
+<p>Any real interval have the same cardinality, so they are equal. A bijection <span class="math inline">\(f\)</span> from <span class="math inline">\((a, b)\)</span> to <span class="math inline">\((c, d)\)</span>: <span class="math inline">\(\dfrac{f(x)-d}{c-d}=\dfrac{x-a}{b-a}\)</span>.</p>
+<p>If a set is finite or has the same cardinality as <span class="math inline">\(N_{+}\)</span>, it is called <strong>countable</strong>. Otherwise it's called <strong>uncountable</strong>.</p>
+<p>The cardinality of <strong>countable infinite</strong> set <span class="math inline">\(S\)</span> is <strong>aleph null</strong> <span class="math inline">\(\aleph_0\)</span>.</p>
+<h3 id="amazing-conclusions">Amazing conclusions</h3>
+<p>​ <span class="math inline">\(|Z| = |N^+|, |Q^+| = |N^+|\)</span>.</p>
+<blockquote>
+<p>To prove <span class="math inline">\(|Q^+| = |N^+|\)</span>, define <span class="math inline">\(S = \{ (p,q) | p, q \in N^+ \}\)</span>.</p>
+<ol type="1">
+<li><span class="math inline">\(Q^+ \subseteq S\)</span>, because <span class="math inline">\(r = \frac{p}{q} \in Q^+\)</span>, then <span class="math inline">\((p, q)\)</span> must be in <span class="math inline">\(S\)</span>.</li>
+<li><span class="math inline">\(|S| = |N^+|\)</span>, because <span class="math inline">\((p, q)\)</span> can be put in the <span class="math inline">\(q\)</span>-th column of <span class="math inline">\(p\)</span>-th row in the table, and we can pick them up in the antidiagonal order <span class="math inline">\((1, 1), (2, 1), (1, 2), (3, 1), (2, 2) \ldots\)</span>.</li>
+<li><span class="math inline">\(N^+ \subseteq Q^+\)</span>.</li>
+</ol>
+</blockquote>
+<h3 id="property">Property</h3>
+<ol type="1">
+<li>No infinite set has a smaller cardinality than a countable set.</li>
+<li>The union of two countable set is countable.</li>
+<li>The union of finite number of countable sets is countable.</li>
+<li>The union of countable number of countable sets is countable.</li>
+</ol>
+<h3 id="cantor-diagonalization-argument">Cantor Diagonalization Argument</h3>
+<p><strong>Theorem</strong>: The set of real number between <span class="math inline">\(0\)</span> and <span class="math inline">\(1\)</span> is uncountable.</p>
+<blockquote>
+<p>Proof:</p>
+<ol type="1">
+<li><span class="math inline">\(|N^+| \le |A|\)</span></li>
+</ol>
+<p>a function <span class="math inline">\(f(n) = \frac{1}{n+1}\)</span> performs <span class="math inline">\(f : N^+ \rightarrow A\)</span>.</p>
+<ol start="2" type="1">
+<li><span class="math inline">\(| N^+ | \neq |A|\)</span></li>
+</ol>
+<p>Assume <span class="math inline">\(A\)</span> is countable, then let <span class="math inline">\(A = \{ r_1, r_2, \ldots, r_n \ldots \}\)</span>.</p>
+<p>Then list</p>
+<p><span class="math inline">\(r_1 = 0.d_{11}d_{12}d_{13}\ldots\)</span></p>
+<p><span class="math inline">\(r_2 = 0.d_{21}d_{22}d_{23}\ldots\)</span></p>
+<p><span class="math inline">\(r_3 = 0.d_{31}d_{32}d_{33}\ldots\)</span></p>
+<p><span class="math inline">\(\ldots\)</span></p>
+<p>Now construct <span class="math inline">\(x = 0.x_1x_2x_3\ldots\)</span></p>
+<p><span class="math inline">\(x_i = p\)</span> if <span class="math inline">\(d_{ii} \neq p\)</span>, otherwise <span class="math inline">\(x_i = p + 1\)</span>.</p>
+<p><span class="math inline">\(x\)</span> is not in <span class="math inline">\(A\)</span> since it's not equal to any <span class="math inline">\(r_i\)</span>.</p>
+</blockquote>
+<p>How to describe the cardinality of <span class="math inline">\((0, 1)\)</span>? We can see that <span class="math inline">\(|(0, 1)| = |R|\)</span>.</p>
+<blockquote>
+<p>Let <span class="math inline">\(f(x) = \tan x\)</span>.</p>
+<p>There is an bijection from <span class="math inline">\(( -\frac{\pi}{2}, \frac{\pi}{2} )\)</span> to <span class="math inline">\((- \infty, + \infty)\)</span>.</p>
+<p>Then <span class="math inline">\(|(0, 1)| = |( -\frac{\pi}{2}, \frac{\pi}{2} )| = |R|\)</span>.</p>
+</blockquote>
+<p>The cardinality of <span class="math inline">\(R\)</span> is <strong>aleph one</strong> <span class="math inline">\(\aleph_1\)</span>.</p>
+<p>In cantor diagonalization argument, we try to list the elements of the set <span class="math inline">\(S\)</span> in a matrix.</p>
+<p>Then we pick the them up in antidiagonal order, to form a sequence.</p>
+<p>Finally if the sequence has the same cardinality as <span class="math inline">\(N^+\)</span>, we can prove <span class="math inline">\(|S| = |N^+|\)</span>.</p>
+<h3 id="computability">Computability</h3>
+<p>A function is <strong>computable</strong> is it can be computed by some programming language. Otherwise it's <strong>incomputable</strong>.</p>
+<p><strong>Schrőder-Bernstein Theorem</strong>: If <span class="math inline">\(|A| \leq |B|\)</span> and <span class="math inline">\(|B| \leq |A|\)</span>, then <span class="math inline">\(|A| = |B|\)</span>.</p>
+<p>To prove <span class="math inline">\(|A| = |B|\)</span>, find <span class="math inline">\(f : A \rightarrow B\)</span> and <span class="math inline">\(g : B \rightarrow A\)</span>.</p>
+<p>The <strong>Continuum Hypothesis</strong> asserts that there's no cardinal number <span class="math inline">\(a\)</span> such that <span class="math inline">\(\aleph_0 &lt; a &lt; \aleph_1\)</span>.</p>
+<link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>a999999
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://blog.jerryhzy.top/2024/06/14/Discrete-Mathematics-Note-Chapter-2/" title="Discrete Mathematics Note Chapter 2">https://blog.jerryhzy.top/2024/06/14/Discrete-Mathematics-Note-Chapter-2/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Discrete-Mathematics/" rel="tag"># Discrete Mathematics</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/05/01/Codeforces-Round-942-Div-1-Solution/" rel="prev" title="Codeforces Round 942 (Div. 1) Solution">
+                  <i class="fa fa-angle-left"></i> Codeforces Round 942 (Div. 1) Solution
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/06/14/Discrete-Mathematics-Note-Chapter-3/" rel="next" title="Discrete Mathematics Note Chapter 3">
+                  Discrete Mathematics Note Chapter 3 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  
+  <div class="comments giscus-container">
+  </div>
+  
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2023 – 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">a999999</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">25k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">1:32</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/1255985107" class="github-corner" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+<script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"1255985107/1255985107.github.io","repo_id":"R_kgDOKtqr_A","category":"General","category_id":"DIC_kwDOKtqr_M4Ca-LA","mapping":"pathname","reactions_enabled":1,"emit_metadata":0,"theme":"preferred_color_scheme","lang":"zh-CN","crossorigin":"anonymous","input_position":"top","loading":"lazy"}</script>
+
+<script>
+document.addEventListener('page:loaded', () => {
+  if (!CONFIG.page.comments) return;
+
+  NexT.utils.loadComments('.giscus-container')
+    .then(() => NexT.utils.getScript('https://giscus.app/client.js', {
+      attributes: {
+        async                   : true,
+        crossOrigin             : 'anonymous',
+        'data-repo'             : CONFIG.giscus.repo,
+        'data-repo-id'          : CONFIG.giscus.repo_id,
+        'data-category'         : CONFIG.giscus.category,
+        'data-category-id'      : CONFIG.giscus.category_id,
+        'data-mapping'          : CONFIG.giscus.mapping,
+        'data-reactions-enabled': CONFIG.giscus.reactions_enabled,
+        'data-emit-metadata'    : CONFIG.giscus.emit_metadata,
+        'data-theme'            : CONFIG.giscus.theme,
+        'data-lang'             : CONFIG.giscus.lang,
+        'data-input-position'   : CONFIG.giscus.input_position,
+        'data-loading'          : CONFIG.giscus.loading
+      },
+      parentNode: document.querySelector('.giscus-container')
+    }));
+});
+</script>
+
+</body>
+</html>

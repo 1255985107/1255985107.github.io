@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.0.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon_64x64_next.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon_16x16_next.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Serif+SC:300,300italic,400,400italic,700,700italic%7COxygen+Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.jerryhzy.top","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"default"},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"giscus","storage":true,"lazyload":true,"nav":null,"activeClass":"giscus"},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"manual","top_n_per_article":3,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="\(2019.6.29\ update:\)给出了时间复杂度的证明，更新了\(L_AT^EX\)  先引入一个问题： 12给定一颗有n个节点的树，给定根节点每次给出点对(x,y)，查询x到y路径上深度最小的节点(即LCA)。  树  看到这样的题目，大家首先想到的是暴力吧？  从\(x\)出发向上走到根，标记每个经过的节点。 从\(y\)出发向上走，经过的第一个有标记的节点就是&quot;x到y路径上深度最">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="重链剖分">
+<meta property="og:url" content="https://blog.jerryhzy.top/2019/06/23/%E9%87%8D%E9%93%BE%E5%89%96%E5%88%86/index.html">
+<meta property="og:site_name" content="A999999&#39;s Blog">
+<meta property="og:description" content="\(2019.6.29\ update:\)给出了时间复杂度的证明，更新了\(L_AT^EX\)  先引入一个问题： 12给定一颗有n个节点的树，给定根节点每次给出点对(x,y)，查询x到y路径上深度最小的节点(即LCA)。  树  看到这样的题目，大家首先想到的是暴力吧？  从\(x\)出发向上走到根，标记每个经过的节点。 从\(y\)出发向上走，经过的第一个有标记的节点就是&quot;x到y路径上深度最">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.luogu.com.cn/upload/pic/53670.png">
+<meta property="og:image" content="https://cdn.luogu.com.cn/upload/pic/53671.png">
+<meta property="og:image" content="https://cdn.luogu.com.cn/upload/pic/53672.png">
+<meta property="og:image" content="https://cdn.luogu.com.cn/upload/pic/53672.png">
+<meta property="og:image" content="https://cdn.luogu.com.cn/upload/pic/53789.png">
+<meta property="og:image" content="https://cdn.luogu.com.cn/upload/pic/58441.png">
+<meta property="og:image" content="https://cdn.luogu.com.cn/upload/pic/58443.png">
+<meta property="article:published_time" content="2019-06-23T04:21:01.000Z">
+<meta property="article:modified_time" content="2024-05-03T07:57:54.061Z">
+<meta property="article:author" content="a999999">
+<meta property="article:tag" content="Tutorial">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.luogu.com.cn/upload/pic/53670.png">
+
+
+<link rel="canonical" href="https://blog.jerryhzy.top/2019/06/23/%E9%87%8D%E9%93%BE%E5%89%96%E5%88%86/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://blog.jerryhzy.top/2019/06/23/%E9%87%8D%E9%93%BE%E5%89%96%E5%88%86/","path":"2019/06/23/重链剖分/","title":"重链剖分"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>重链剖分 | A999999's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">A999999's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-课程笔记"><a href="/note/" rel="section"><i class="fas fa-book fa-fw"></i>课程笔记</a></li><li class="menu-item menu-item-算法竞赛"><a href="/contest/" rel="section"><i class="fas fa-chart-simple fa-fw"></i>算法竞赛</a></li><li class="menu-item menu-item-友链"><a href="/friendlink/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-盘"><a href="http://pan.jerryhzy.top:5244/" rel="section" target="_blank"><i class="fas fa-cloud fa-fw"></i>盘</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%84%E5%A4%84%E7%90%86"><span class="nav-number">1.</span> <span class="nav-text">预处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E6%89%BElca"><span class="nav-number">2.</span> <span class="nav-text">查找LCA</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A5%97%E7%BA%BF%E6%AE%B5%E6%A0%91"><span class="nav-number">3.</span> <span class="nav-text">套线段树</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%8E%E8%AF%9D"><span class="nav-number">3.1.</span> <span class="nav-text">后话</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="a999999"
+      src="/images/Yamada_Ryo3.jpg">
+  <p class="site-author-name" itemprop="name">a999999</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/1255985107" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;1255985107" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:jerryhzy@outlook.com" title="E-Mail → mailto:jerryhzy@outlook.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://blog.jerryhzy.top/2019/06/23/%E9%87%8D%E9%93%BE%E5%89%96%E5%88%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/Yamada_Ryo3.jpg">
+      <meta itemprop="name" content="a999999">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="A999999's Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="重链剖分 | A999999's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          重链剖分
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2019-06-23 12:21:01" itemprop="dateCreated datePublished" datetime="2019-06-23T12:21:01+08:00">2019-06-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-05-03 15:57:54" itemprop="dateModified" datetime="2024-05-03T15:57:54+08:00">2024-05-03</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/contest/" itemprop="url" rel="index"><span itemprop="name">contest</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>4.8k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>18 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><span class="math inline">\(2019.6.29\ update:\)</span>给出了时间复杂度的证明，更新了<span class="math inline">\(L_AT^EX\)</span></p>
+<hr />
+<p>先引入一个问题：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">给定一颗有n个节点的树，给定根节点</span><br><span class="line">每次给出点对(x,y)，查询x到y路径上深度最小的节点(即LCA)。</span><br></pre></td></tr></table></figure>
+<figure>
+<img src="https://cdn.luogu.com.cn/upload/pic/53670.png" alt="" /><figcaption>树</figcaption>
+</figure>
+<p>看到这样的题目，大家首先想到的是暴力吧？</p>
+<ol type="1">
+<li><p>从<span class="math inline">\(x\)</span>出发向上走到根，标记每个经过的节点。</p></li>
+<li><p>从<span class="math inline">\(y\)</span>出发向上走，经过的第一个<strong>有标记</strong>的节点就是"x到y路径上深度最小的节点"<span class="math inline">\((LCA)\)</span>。</p></li>
+</ol>
+<figure>
+<img src="https://cdn.luogu.com.cn/upload/pic/53671.png" alt="" /><figcaption>(3,2)</figcaption>
+</figure>
+<p><span class="math inline">\(Code:\)</span></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">LCA</span><span class="params">(<span class="type">int</span> x,<span class="type">int</span> y)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(x==y)<span class="keyword">return</span> x;</span><br><span class="line">    <span class="keyword">while</span>(x!=root)vis[x]=<span class="literal">true</span>,x=fa[x];</span><br><span class="line">    <span class="keyword">while</span>(y!=root)</span><br><span class="line">        <span class="keyword">if</span>(vis[y])<span class="keyword">return</span> y;</span><br><span class="line">        <span class="keyword">else</span> y=fa[y];</span><br><span class="line">    <span class="keyword">return</span> root;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>但是让我们算算复杂度... <span class="math inline">\(\Theta(N)\ \)</span><del>TLE</del></p>
+<p>为什么复杂度如此之高？明显是因为走得太慢了。</p>
+<p>我们需要更好的算法。</p>
+<p>怎么做呢？</p>
+<p>睿智的先人想到了<del>倍增</del><strong>树剖</strong></p>
+<p>先把树剖分成一条条的链</p>
+<p>每次直接跳一整条链，不就快了吗？</p>
+<p>于是，树链剖分(<span class="math inline">\(Tree-chain\ Partition\)</span>)诞生了。</p>
+<span id="more"></span>
+<h2 id="预处理">预处理</h2>
+<p>先来说剖分：</p>
+<p><strong>剖分，是指依据某种运算，将几个节点分入同一条链，而将一颗树分成几条链的方法。</strong></p>
+<p>看不懂没关系<del>反正它不重要</del></p>
+<p>常见的剖分有三种： 1. 重链剖分 2. 实链剖分（Link-Cut Tree才用） 3. 长链剖分（几乎不用）</p>
+<p>所以，我们讲的是<strong>重链剖分</strong></p>
+<p>重链剖分依据啥呢？依据的是儿子的子树大小，即<span class="math inline">\(x\)</span><strong>子树最大</strong>的儿子与<span class="math inline">\(x\)</span>属于同一条重链。</p>
+<p>首先定义几种变量： - <span class="math inline">\(dep_x\)</span>：<span class="math inline">\(x\)</span>的深度 - <span class="math inline">\(fa_x\)</span>：<span class="math inline">\(x\)</span>的父亲 - <span class="math inline">\(siz_x\)</span>：以<span class="math inline">\(x\)</span>为根的子树的节点数 - <span class="math inline">\(son_x\)</span>:<span class="math inline">\(x\)</span>的重儿子 - <span class="math inline">\(top_x\)</span>:<span class="math inline">\(x\)</span>所在重链的顶端编号 - <span class="math inline">\(root\)</span>:整棵树的根 - <span class="math inline">\(son(x)\)</span>:<span class="math inline">\(x\)</span>的儿子所构成的集合</p>
+<p>所以我们先要dfs一遍把前4种值算出来。</p>
+<p><span class="math inline">\(Code:\)</span></p>
+<p>(<span class="math inline">\(head,ver,next\)</span>均为邻接表,不会的<del>你还看什么树剖</del>请先学会)</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">dfs1</span><span class="params">(ci&amp;x)</span></span>&#123;<span class="comment">//ci -&gt; const int,后文同</span></span><br><span class="line">    siz[x]=<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> k=head[x],y;y=ver[k],k;k=next[k])</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(y==fa[x])<span class="keyword">continue</span>;</span><br><span class="line">        fa[y]=x;dep[y]=dep[x]+<span class="number">1</span>;<span class="built_in">dfs1</span>(y);</span><br><span class="line">        <span class="keyword">if</span>(siz[son[x]]&lt;siz[y])son[x]=y;<span class="comment">//求重儿子</span></span><br><span class="line">        siz[x]+=siz[y];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//以下语句加在main(int argc,char **argv)/main() 中</span></span><br><span class="line">dep[root]=<span class="number">1</span>;<span class="built_in">dfs1</span>(root);</span><br></pre></td></tr></table></figure>
+<p>算完了前<span class="math inline">\(4\)</span>种值，<span class="math inline">\(top\)</span>该怎么算呢？</p>
+<p>根据定义，一条重链上的节点的<span class="math inline">\(top\)</span>值<strong>相同</strong>。</p>
+<p>而在重链剖分中，<span class="math inline">\(x\)</span>和<span class="math inline">\(son_x\)</span>在<strong>一条</strong>重链上。</p>
+<p><del>是不是发现了什么</del></p>
+<p>于是我们得到了一条规律： <span class="math display">\[
+top_x=
+\begin{cases}
+&amp;x &amp;|x\neq son_{fa_x}\\
+&amp;top_{fa_x} &amp;|x=son_{fa_x}
+\end{cases}
+\]</span></p>
+<p><del>是不是很简单</del></p>
+<p>所以我们就可以愉快的<del>再dfs一遍</del>计算啦</p>
+<p><span class="math inline">\(Code:\)</span></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">dfs2</span><span class="params">(ci&amp;x)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(!son[x])<span class="keyword">return</span>;</span><br><span class="line">    top[son[x]]=top[x];<span class="built_in">dfs2</span>(son[x]);<span class="comment">//直接在fa[x]处赋值，减少参数传递</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> k=head[x],y;y=ver[k],k;k=next[k])</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(y==fa[x]||y==son[x])<span class="keyword">continue</span>;</span><br><span class="line">        top[y]=y;<span class="built_in">dfs2</span>(y);<span class="comment">//非重儿子的top[]一定是自己</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//以下语句加在main(int argc,char **argv)/main() 中</span></span><br><span class="line">top[root]=root;<span class="built_in">dfs2</span>(root);</span><br></pre></td></tr></table></figure>
+<p>预处理复杂度<span class="math inline">\(\Theta(N)\)</span></p>
+<p>剖完后的树 <img src="https://cdn.luogu.com.cn/upload/pic/53672.png" alt="例重链" /></p>
+<h2 id="查找lca">查找LCA</h2>
+<p>有人问，把链剖出来有对于查LCA什么用呢？</p>
+<p>我答：还记得暴力为什么TLE吗？</p>
+<p>走太慢啦！</p>
+<p>所以，树链剖分的实际作用——加速！</p>
+<p>但是，剖完后如何查找呢？</p>
+<p><del>经过苦思冥想，</del> 我们发现一条规律：</p>
+<p><strong>无论什么时候，只要两个节点不在一条重链上<span class="math inline">\((\)</span>即<span class="math inline">\(top_x!=top_y)\)</span>，那么他们的<span class="math inline">\(LCA\)</span>肯定不在深度大的那条重链上。</strong></p>
+<p>所以，我们可以这样： 1. 对于点对<span class="math inline">\((x,y)\)</span>，记<span class="math inline">\(fx=top_x,fy=top_y\)</span>. 2. 如果<span class="math inline">\(fx!=fy\)</span>，转第3步；否则转第4步. 3. 将<span class="math inline">\(fx,fy\)</span>中<span class="math inline">\(dep[]\)</span>值大的往上跳(设<span class="math inline">\(dep_{fx}&gt;dep_{fy}\)</span>)，更新<span class="math inline">\(((x,y)-&gt;(fa_{fx},y))\)</span>，回到第2步. 4. 这时<span class="math inline">\((x,y)\)</span>肯定在一条重链上<span class="math inline">\((top_x=top_y)\)</span>，而深度较小的那个就是<span class="math inline">\(LCA\)</span>.</p>
+<p><span class="math inline">\(Code:\)</span></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">LCA</span><span class="params">(<span class="type">int</span> x,<span class="type">int</span> y)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> fx=top[x],fy=top[y];</span><br><span class="line">    <span class="keyword">while</span>(fx!=fy)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(dep[fx]&lt;dep[fy])std::<span class="built_in">swap</span>(x,y),std::<span class="built_in">swap</span>(fx,fy);</span><br><span class="line">        x=fa[fx],fx=top[x];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> dep[x]&lt;dep[y]?x:y;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>那么这种加速跳法的效果怎么样呢？</p>
+<p>可以证明单次操作的时间复杂度 <span class="math inline">\(\Theta(lgN)\)</span>。</p>
+<details class="note primary"><summary><p>证明</p>
+</summary>
+<p>我们需要<span class="math inline">\(3\)</span>个定理：</p>
+<ol type="1">
+<li><span class="math inline">\(\forall y\in son(x)\  \&amp;\ y\neq son_x\)</span>，都有<span class="math inline">\(siz_y\le \frac{siz_x}{2}\)</span></li>
+</ol>
+<blockquote>
+<p>反证法，假设有 <span class="math inline">\(siz_y&gt;\frac{siz_x}{2}\)</span>且<span class="math inline">\(y\in son(x)\)</span> 那么就有 <span class="math inline">\(y=son_x\)</span>，与定理矛盾 所以假设不成立，原命题成立</p>
+</blockquote>
+<ol start="2" type="1">
+<li><span class="math inline">\(\forall x\in son(root)\)</span> ,从 <span class="math inline">\(root\)</span> 到 <span class="math inline">\(x\)</span> 的路径上存在不超过 <span class="math inline">\(lgN\)</span> 条轻边</li>
+</ol>
+<blockquote>
+<p>因为每经过一条轻边，到达的点的<span class="math inline">\(siz\)</span>就会减半 所以最多减 <span class="math inline">\(lgN\)</span> 次 <span class="math inline">\(siz_x\)</span> 就变成 <span class="math inline">\(1\)</span> 了（到达叶子节点）</p>
+</blockquote>
+<ol start="3" type="1">
+<li><span class="math inline">\(\forall x\in son(root)\)</span> ，从 <span class="math inline">\(root\)</span> 到 <span class="math inline">\(x\)</span> 的路径上存在不超过 <span class="math inline">\(lgN\)</span> 条重链</li>
+</ol>
+<blockquote>
+<p>因为一条<strong>重链</strong>的<strong>两端</strong>必定是<strong>轻边</strong> 所以重链的数量比轻边少一条（重链通向 <span class="math inline">\(root\)</span> 除外） 最坏情况下轻重链数量一样，为 <span class="math inline">\(lgN\)</span></p>
+</blockquote>
+<p>如果每次我们跳过一条重链，这样的重链有 <span class="math inline">\(lgN\)</span> 条</p>
+<p>时间复杂度就为 <span class="math inline">\(\Theta(lgN)\)</span> 啦</p>
+
+</details>
+<p>例题<a target="_blank" rel="noopener" href="https://www.luogu.org/fe/problem/P3379">P3379</a></p>
+<p>找<span class="math inline">\(LCA\)</span>的板子题</p>
+<details class="note info no-icon"><summary><p>Code(DFS)</p>
+</summary>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> N 500010</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> M 500010</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> ci const int</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="type">int</span> head[N],ver[M&lt;&lt;<span class="number">1</span>],next[M&lt;&lt;<span class="number">1</span>],tot;</span><br><span class="line"><span class="type">int</span> dep[N],fa[N],siz[N],son[N],top[N];</span><br><span class="line"><span class="type">int</span> n,m,root;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">add</span><span class="params">(ci&amp;x,ci&amp;y)</span></span>&#123;ver[++tot]=y;next[tot]=head[x];head[x]=tot;&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">dfs1</span><span class="params">(ci&amp;x)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    siz[x]=<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> k=head[x],y;y=ver[k],k;k=next[k])</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(y==fa[x])<span class="keyword">continue</span>;</span><br><span class="line">        fa[y]=x;dep[y]=dep[x]+<span class="number">1</span>;<span class="built_in">dfs1</span>(y);</span><br><span class="line">        <span class="keyword">if</span>(siz[son[x]]&lt;siz[y])son[x]=y;</span><br><span class="line">        siz[x]+=siz[y];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">dfs2</span><span class="params">(ci&amp;x)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(!son[x])<span class="keyword">return</span>;</span><br><span class="line">    top[son[x]]=top[x];<span class="built_in">dfs2</span>(son[x]);</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> k=head[x],y;y=ver[k],k;k=next[k])</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(y==fa[x]||y==son[x])<span class="keyword">continue</span>;</span><br><span class="line">        top[y]=y;<span class="built_in">dfs2</span>(y);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">LCA</span><span class="params">(<span class="type">int</span> x,<span class="type">int</span> y)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">while</span>(top[x]!=top[y])</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(dep[top[x]]&lt;dep[top[y]])<span class="built_in">swap</span>(x,y);</span><br><span class="line">        x=fa[top[x]];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> dep[x]&lt;dep[y]?x:y;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">signed</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc,<span class="type">char</span> **agrv)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d%d%d&quot;</span>,&amp;n,&amp;m,&amp;root);</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>,x,y;i&lt;n;++i)</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">&quot;%d%d&quot;</span>,&amp;x,&amp;y),<span class="built_in">add</span>(x,y),<span class="built_in">add</span>(y,x);<span class="comment">//记得添双向边哦</span></span><br><span class="line">    dep[root]=<span class="number">1</span>;<span class="built_in">dfs1</span>(root);</span><br><span class="line">    top[root]=root;<span class="built_in">dfs2</span>(root);</span><br><span class="line">    <span class="keyword">register</span> <span class="type">int</span> x,y;</span><br><span class="line">    <span class="keyword">while</span>(m--)</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">&quot;%d%d&quot;</span>,&amp;x,&amp;y),<span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,<span class="built_in">LCA</span>(x,y));</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</details>
+<p>这里是<a target="_blank" rel="noopener" href="https://www.luogu.org/recordnew/show/20058405">BFS实现版</a>（不知道为什么更慢）</p>
+<details class="note info no-icon"><summary><p>Code(BFS)</p>
+</summary>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> N 500010</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> ci const int</span></span><br><span class="line"><span class="keyword">using</span> std::swap;</span><br><span class="line"><span class="type">int</span> head[N],ver[N&lt;&lt;<span class="number">1</span>],next[N&lt;&lt;<span class="number">1</span>],tot;</span><br><span class="line"><span class="type">int</span> dep[N],fa[N],son[N],siz[N],top[N];</span><br><span class="line"><span class="type">int</span> q[N],sta[N],seg[N],rev[N];</span><br><span class="line"><span class="type">int</span> n,m,root;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">add</span><span class="params">(ci&amp;x,ci&amp;y)</span></span>&#123;ver[++tot]=y;next[tot]=head[x];head[x]=tot;&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">bfs</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> l=<span class="number">0</span>,r=<span class="number">1</span>,x;</span><br><span class="line">    dep[q[<span class="number">1</span>]=root]=<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span>(l!=r)</span><br><span class="line">    &#123;</span><br><span class="line">        x=q[++l];</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> k=head[x],y;y=ver[k],k;k=next[k])</span><br><span class="line">        <span class="keyword">if</span>(!dep[y])</span><br><span class="line">            q[++r]=y,fa[y]=x,dep[y]=dep[x]+<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=r;x=q[i],i;--i)</span><br><span class="line">        ++siz[x],siz[fa[x]]+=siz[x];</span><br><span class="line">    siz[<span class="number">0</span>]=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;x=q[i],i&lt;=r;++i)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(!top[x])top[x]=x;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> k=head[x],y;y=ver[k],k;k=next[k])</span><br><span class="line">        <span class="keyword">if</span>(y!=fa[x]&amp;&amp;siz[son[x]]&lt;siz[y])</span><br><span class="line">            son[x]=y;</span><br><span class="line">        <span class="keyword">if</span>(son[x])top[son[x]]=top[x];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=r,tp,p;x=q[i],i;--i)</span><br><span class="line">        <span class="keyword">if</span>(siz[x]==<span class="number">1</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">for</span>(p=x,tp=<span class="number">0</span>;top[p]==top[x];p=fa[p])</span><br><span class="line">                sta[++tp]=p;</span><br><span class="line">            <span class="keyword">for</span>(;tp;--tp)</span><br><span class="line">                seg[sta[tp]]=++seg[<span class="number">0</span>],rev[seg[<span class="number">0</span>]]=sta[tp];</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">LCA</span><span class="params">(<span class="type">int</span> x,<span class="type">int</span> y)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">while</span>(top[x]!=top[y])</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(dep[top[x]]&lt;dep[top[y]])<span class="built_in">swap</span>(x,y);</span><br><span class="line">        x=fa[top[x]];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> dep[x]&lt;dep[y]?x:y;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">signed</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc,<span class="type">char</span> **argv)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d%d%d&quot;</span>,&amp;n,&amp;m,&amp;root);</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>,x,y;i&lt;n;++i)</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">&quot;%d%d&quot;</span>,&amp;x,&amp;y),<span class="built_in">add</span>(x,y),<span class="built_in">add</span>(y,x);</span><br><span class="line">    <span class="built_in">bfs</span>();</span><br><span class="line">    <span class="keyword">register</span> <span class="type">int</span> x,y;</span><br><span class="line">    <span class="keyword">while</span>(m--)</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">&quot;%d%d&quot;</span>,&amp;x,&amp;y),<span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,<span class="built_in">LCA</span>(x,y));</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</details>
+<h2 id="套线段树">套线段树</h2>
+<p>又有<del>睿智</del>聪明的小盆友问了：</p>
+<p>这个奇怪的东西怎么套线段树呢？</p>
+<p>我们来再看一看树链剖分后轻重边的分配情况：</p>
+<p><img src="https://cdn.luogu.com.cn/upload/pic/53672.png" /></p>
+<p>如果我们把链拼成一个序列，就像这样：</p>
+<p><img src="https://cdn.luogu.com.cn/upload/pic/53789.png" /></p>
+<p>那么是不是可以用线段树维护呢？</p>
+<p><del>不是也得是</del></p>
+<p>如何确定每个节点在序列中的位置呢？</p>
+<p>我们回到<span class="math inline">\(dfs2()\)</span>中</p>
+<p>很容易发现一个性质：</p>
+<p>对于同一条重链上的节点，他们一定是被<strong>连续访问</strong>的！</p>
+<p>所以我们可以直接在<span class="math inline">\(dfs2()\)</span>中计算出每个节点在序列中的位置（其实就是重标号）</p>
+<p><span class="math inline">\(Code:\)</span></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">dfs2</span><span class="params">(<span class="type">int</span> x)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(!son[x])<span class="keyword">return</span>;</span><br><span class="line">    seg[son[x]]=++cnt;rev[cnt]=son[x];<span class="comment">//rev[x]表示序列中x的对应树上节点</span></span><br><span class="line">    top[son[x]]=top[x];<span class="built_in">dfs2</span>(son[x]);<span class="comment">//直接访问son[x]保证连续性</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> k=head[x],y;y=ver[k],k;k=next[k])</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(y==fa[x]||y==son[x])<span class="keyword">continue</span>;</span><br><span class="line">        seg[y]=++cnt;rev[cnt]=y;<span class="comment">//用seg[0]代替cnt可以省空间</span></span><br><span class="line">        top[y]=y;<span class="built_in">dfs2</span>(y);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>接下来的问题是：</p>
+<p>如果要查询一条路径上的权值和/最大值，怎么办呢？</p>
+<p>记<span class="math inline">\(x\)</span>到<span class="math inline">\(y\)</span>的<strong>路径权值和</strong>为<span class="math inline">\(sum(x,y)\)</span>。</p>
+<p>来看这张图： <img src="https://cdn.luogu.com.cn/upload/pic/58441.png" /></p>
+<p>假设现在查询<span class="math inline">\(sum(3,4)\)</span></p>
+<p>将上图树拆成序列，用线段树维护 <img src="https://cdn.luogu.com.cn/upload/pic/58443.png" /></p>
+<p>可以发现，如果<span class="math inline">\(top_x\neq top_y\)</span>，那么<span class="math inline">\(dep_{top}\)</span>较大的那条链的<strong>全部节点</strong>都在答案中（即<span class="math inline">\(sum(x,top_x)\in sum(x,y)\)</span> | {<span class="math inline">\(top_x\neq top_y\ \&amp;\ dep_x&gt;dep_y\)</span>}）</p>
+<p>又因为我们的重链节点是<strong>连续储存</strong>的，在线段树中是一段<strong>区间</strong></p>
+<p><del>不用我说了吧</del></p>
+<p>和之前一样，当计算完当前链的答案后，<span class="math inline">\(x\)</span>跳到<span class="math inline">\(fa_{top_x}\)</span></p>
+<p>最后<span class="math inline">\(top_x==top_y\)</span>时，只用计算<span class="math inline">\(sum(x,y)\)</span>这一段<strong>区间</strong>了。</p>
+<p>整理一下：</p>
+<ol type="1">
+<li><p>设<span class="math inline">\(fx=top_x,fy=top_y\)</span>。</p></li>
+<li><p>若<span class="math inline">\(fx==fy\)</span>，执行第4步；否则，设<span class="math inline">\(dep_x&gt;dep_y\)</span>，执行第三步。</p></li>
+<li><p>计算<span class="math inline">\((x,top_x)\)</span>对答案的贡献，<span class="math inline">\(x=fa_{top_x}\)</span>。</p></li>
+<li><p>设<span class="math inline">\(dep_x&lt;dep_y\)</span>，计算<span class="math inline">\((x,y)\)</span>对答案的贡献</p></li>
+</ol>
+<p><span class="math inline">\(Code:\)</span>（以求和为例）</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">query_sum</span><span class="params">(<span class="type">int</span> x,<span class="type">int</span> y)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> fx=top[x],fy=top[y],ans=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span>(fx!=fy)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(dep[fx]&lt;dep[fy])<span class="built_in">swap</span>(x,y),<span class="built_in">swap</span>(fx,fy);</span><br><span class="line">        ans+=<span class="built_in">ask_sum</span>(<span class="number">1</span>,<span class="number">1</span>,n,seg[fx],seg[x]);</span><br><span class="line">        x=fa[fx],fx=top[x];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(dep[x]&gt;dep[y])<span class="built_in">swap</span>(x,y);</span><br><span class="line">    ans+=<span class="built_in">ask_sum</span>(<span class="number">1</span>,<span class="number">1</span>,n,seg[x],seg[y]);</span><br><span class="line">    <span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>同样的，我们可以推广到 求<span class="math inline">\(max\)</span>/ 求<span class="math inline">\(min\)</span> /修改 的操作</p>
+<p>因为每次跳重链都要进行<span class="math inline">\(\Theta(lgN)\)</span>的查询</p>
+<p>所以时间复杂度<span class="math inline">\(\Theta(lg^2N)\)</span></p>
+<p>例题<a target="_blank" rel="noopener" href="https://www.luogu.org/fe/problem/P2590">P2590</a></p>
+<p>认真看代码，不会很难</p>
+<details class="note info no-icon"><summary><p>Code</p>
+</summary>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> N 30010</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="type">int</span> head[N],ver[N&lt;&lt;<span class="number">1</span>],next[N&lt;&lt;<span class="number">1</span>],tot;</span><br><span class="line"><span class="type">int</span> dep[N],fa[N],siz[N],son[N],top[N];</span><br><span class="line"><span class="type">int</span> seg[N],rev[N],sum[N&lt;&lt;<span class="number">2</span>],maxn[N&lt;&lt;<span class="number">2</span>];</span><br><span class="line"><span class="type">int</span> n,m,num[N];<span class="type">char</span> op[<span class="number">10</span>];</span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="type">void</span> <span class="title">add</span><span class="params">(<span class="type">int</span> x,<span class="type">int</span> y)</span></span>&#123;ver[++tot]=y;next[tot]=head[x];head[x]=tot;&#125;</span><br><span class="line"><span class="comment">//---------------------------------------------------------</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">dfs1</span><span class="params">(<span class="type">int</span> x)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    siz[x]=<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> k=head[x],y;y=ver[k],k;k=next[k])</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(y==fa[x])<span class="keyword">continue</span>;</span><br><span class="line">        fa[y]=x;dep[y]=dep[x]+<span class="number">1</span>;<span class="built_in">dfs1</span>(y);</span><br><span class="line">        <span class="keyword">if</span>(siz[son[x]]&lt;siz[y])son[x]=y;</span><br><span class="line">        siz[x]+=siz[y];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">dfs2</span><span class="params">(<span class="type">int</span> x)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(!son[x])<span class="keyword">return</span>;</span><br><span class="line">    seg[son[x]]=++seg[<span class="number">0</span>];rev[seg[<span class="number">0</span>]]=son[x];<span class="comment">//分配线段树节点</span></span><br><span class="line">    top[son[x]]=top[x];<span class="built_in">dfs2</span>(son[x]);</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> k=head[x],y;y=ver[k],k;k=next[k])</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(y==fa[x]||y==son[x])<span class="keyword">continue</span>;</span><br><span class="line">        seg[y]=++seg[<span class="number">0</span>];rev[seg[<span class="number">0</span>]]=y;</span><br><span class="line">        top[y]=y;<span class="built_in">dfs2</span>(y);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//---------------------------------------------------------</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">build</span><span class="params">(<span class="type">int</span> p,<span class="type">int</span> l,<span class="type">int</span> r)</span><span class="comment">//不会线段树的可以去逛我的blog</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(l==r)&#123;sum[p]=maxn[p]=num[rev[l]];<span class="keyword">return</span>;&#125;</span><br><span class="line">    <span class="type">int</span> mid=l+r&gt;&gt;<span class="number">1</span>;</span><br><span class="line">    <span class="built_in">build</span>(p&lt;&lt;<span class="number">1</span>,l,mid);<span class="built_in">build</span>(p&lt;&lt;<span class="number">1</span>|<span class="number">1</span>,mid+<span class="number">1</span>,r);</span><br><span class="line">    sum[p]=sum[p&lt;&lt;<span class="number">1</span>]+sum[p&lt;&lt;<span class="number">1</span>|<span class="number">1</span>];</span><br><span class="line">    maxn[p]=<span class="built_in">max</span>(maxn[p&lt;&lt;<span class="number">1</span>],maxn[p&lt;&lt;<span class="number">1</span>|<span class="number">1</span>]);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">change</span><span class="params">(<span class="type">int</span> p,<span class="type">int</span> l,<span class="type">int</span> r,<span class="type">int</span> x,<span class="type">int</span> val)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(l==r)&#123;sum[p]=maxn[p]=val;<span class="keyword">return</span>;&#125;</span><br><span class="line">    <span class="type">int</span> mid=l+r&gt;&gt;<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">if</span>(x&lt;=mid)<span class="built_in">change</span>(p&lt;&lt;<span class="number">1</span>,l,mid,x,val);</span><br><span class="line">    <span class="keyword">else</span> <span class="built_in">change</span>(p&lt;&lt;<span class="number">1</span>|<span class="number">1</span>,mid+<span class="number">1</span>,r,x,val);</span><br><span class="line">    sum[p]=sum[p&lt;&lt;<span class="number">1</span>]+sum[p&lt;&lt;<span class="number">1</span>|<span class="number">1</span>];</span><br><span class="line">    maxn[p]=<span class="built_in">max</span>(maxn[p&lt;&lt;<span class="number">1</span>],maxn[p&lt;&lt;<span class="number">1</span>|<span class="number">1</span>]);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">ask_sum</span><span class="params">(<span class="type">int</span> p,<span class="type">int</span> l,<span class="type">int</span> r,<span class="type">int</span> x,<span class="type">int</span> y)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(x&lt;=l&amp;&amp;r&lt;=y)<span class="keyword">return</span> sum[p];</span><br><span class="line">    <span class="type">int</span> mid=l+r&gt;&gt;<span class="number">1</span>,ans=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span>(x&lt;=mid)ans=<span class="built_in">ask_sum</span>(p&lt;&lt;<span class="number">1</span>,l,mid,x,y);</span><br><span class="line">    <span class="keyword">if</span>(y&gt;mid)ans+=<span class="built_in">ask_sum</span>(p&lt;&lt;<span class="number">1</span>|<span class="number">1</span>,mid+<span class="number">1</span>,r,x,y);</span><br><span class="line">    <span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">ask_max</span><span class="params">(<span class="type">int</span> p,<span class="type">int</span> l,<span class="type">int</span> r,<span class="type">int</span> x,<span class="type">int</span> y)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(x&lt;=l&amp;&amp;r&lt;=y)<span class="keyword">return</span> maxn[p];</span><br><span class="line">    <span class="type">int</span> mid=l+r&gt;&gt;<span class="number">1</span>,ans=<span class="number">-30000</span>;</span><br><span class="line">    <span class="keyword">if</span>(x&lt;=mid)ans=<span class="built_in">ask_max</span>(p&lt;&lt;<span class="number">1</span>,l,mid,x,y);</span><br><span class="line">    <span class="keyword">if</span>(y&gt;mid)ans=<span class="built_in">max</span>(ans,<span class="built_in">ask_max</span>(p&lt;&lt;<span class="number">1</span>|<span class="number">1</span>,mid+<span class="number">1</span>,r,x,y));</span><br><span class="line">    <span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//---------------------------------------------------------</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">query_max</span><span class="params">(<span class="type">int</span> x,<span class="type">int</span> y)</span><span class="comment">//查询部分</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> fx=top[x],fy=top[y],ans=<span class="number">-30000</span>;<span class="comment">//记得初始化</span></span><br><span class="line">    <span class="keyword">while</span>(fx!=fy)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(dep[fx]&lt;dep[fy])<span class="built_in">swap</span>(x,y),<span class="built_in">swap</span>(fx,fy);</span><br><span class="line">        ans=<span class="built_in">max</span>(ans,<span class="built_in">ask_max</span>(<span class="number">1</span>,<span class="number">1</span>,n,seg[fx],seg[x]));<span class="comment">//fx~x的这条链</span></span><br><span class="line">        x=fa[fx],fx=top[x];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(dep[x]&gt;dep[y])<span class="built_in">swap</span>(x,y);</span><br><span class="line">    ans=<span class="built_in">max</span>(ans,<span class="built_in">ask_max</span>(<span class="number">1</span>,<span class="number">1</span>,n,seg[x],seg[y]));<span class="comment">//x~y的这条链</span></span><br><span class="line">    <span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">query_sum</span><span class="params">(<span class="type">int</span> x,<span class="type">int</span> y)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> fx=top[x],fy=top[y],ans=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span>(fx!=fy)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(dep[fx]&lt;dep[fy])<span class="built_in">swap</span>(x,y),<span class="built_in">swap</span>(fx,fy);</span><br><span class="line">        ans+=<span class="built_in">ask_sum</span>(<span class="number">1</span>,<span class="number">1</span>,n,seg[fx],seg[x]);<span class="comment">//同上</span></span><br><span class="line">        x=fa[fx],fx=top[x];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(dep[x]&gt;dep[y])<span class="built_in">swap</span>(x,y);</span><br><span class="line">    ans+=<span class="built_in">ask_sum</span>(<span class="number">1</span>,<span class="number">1</span>,n,seg[x],seg[y]);</span><br><span class="line">    <span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">signed</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;n);</span><br><span class="line">    <span class="type">int</span> x,y;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;n;++i)</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d%d&quot;</span>,&amp;x,&amp;y),<span class="built_in">add</span>(x,y),<span class="built_in">add</span>(y,x);</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;++i)<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,num+i);</span><br><span class="line">    dep[<span class="number">1</span>]=rev[<span class="number">1</span>]=seg[<span class="number">0</span>]=seg[<span class="number">1</span>]=top[<span class="number">1</span>]=<span class="number">1</span>;<span class="comment">//记得初始化！！！</span></span><br><span class="line">    <span class="built_in">dfs1</span>(<span class="number">1</span>);<span class="built_in">dfs2</span>(<span class="number">1</span>);<span class="built_in">build</span>(<span class="number">1</span>,<span class="number">1</span>,n);</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;m);</span><br><span class="line">    <span class="keyword">while</span>(m--)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">&quot;%s%d%d&quot;</span>,op,&amp;x,&amp;y);</span><br><span class="line">        <span class="keyword">if</span>(*op==<span class="string">&#x27;C&#x27;</span>)<span class="built_in">change</span>(<span class="number">1</span>,<span class="number">1</span>,n,seg[x],y);</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">if</span>(op[<span class="number">1</span>]==<span class="string">&#x27;M&#x27;</span>)<span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,<span class="built_in">query_max</span>(x,y));</span><br><span class="line">            <span class="keyword">else</span> <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,<span class="built_in">query_sum</span>(x,y));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</details>
+<hr />
+<h3 id="后话">后话</h3>
+<p>看完之后这些题就可以愉快地<del>WA</del><span class="math inline">\(AC\)</span>啦</p>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://www.luogu.org/problemnew/show/P1505">【国家集训队】旅游</a></li>
+</ol>
+<p>主要是线段树上的区间修改</p>
+<details class="note info no-icon"><summary><p>解法</p>
+</summary>
+<p>过程如下:</p>
+<p>因为是区间<span class="math inline">\(*(-1)\)</span>，所以修改后最大值是<span class="math inline">\(-(\)</span>最小值<span class="math inline">\()\)</span>，最小值是<span class="math inline">\(-(\)</span>最大值<span class="math inline">\()\)</span>，区间和是<span class="math inline">\(-(\)</span>区间和<span class="math inline">\()\)</span></p>
+<p><span class="math inline">\(Code:\)</span> <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">void pushdown(ci&amp;p,ci&amp;l,ci&amp;r)//修改节点</span><br><span class="line">&#123;</span><br><span class="line">    tree[p]=Node(-tree[p].minn,//最大值 = -最小值</span><br><span class="line">                 -tree[p].maxn,//最小值 = -最大值</span><br><span class="line">                 -tree[p].sum,tree[p].tag^1);//区间和 = -区间和，标记 ^= 1</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> 时间复杂度<span class="math inline">\(\Theta(Mlg^2N)\)</span></p>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.org/recordnew/show/19845430">AC记录</a></p>
+<details class="note info no-icon">
+<summary>
+<p>
+Code
+</p>
+<p></summary> <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> N 200010</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> ci const int</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> inf 0x3f3f3f3f</span></span><br><span class="line"><span class="keyword">using</span> std::max;</span><br><span class="line"><span class="keyword">using</span> std::min;</span><br><span class="line"><span class="keyword">using</span> std::swap;</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">Node</span>&#123;</span><br><span class="line">    <span class="type">int</span> maxn,minn,sum,tag;<span class="comment">//区间最小，区间最大，区间和，区间标记</span></span><br><span class="line">    <span class="built_in">Node</span>(<span class="type">int</span> _1=<span class="number">0</span>,<span class="type">int</span> _2=<span class="number">0</span>,<span class="type">int</span> _3=<span class="number">0</span>,<span class="type">int</span> _4=<span class="number">0</span>):</span><br><span class="line">        <span class="built_in">maxn</span>(_1),<span class="built_in">minn</span>(_2),<span class="built_in">sum</span>(_3),<span class="built_in">tag</span>(_4)&#123;&#125;</span><br><span class="line">    Node <span class="keyword">operator</span> +(Node b)<span class="type">const</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">Node</span>(<span class="built_in">max</span>(maxn,b.maxn),<span class="built_in">min</span>(minn,b.minn),</span><br><span class="line">                    sum+b.sum,tag|b.tag);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line">Node tree[N&lt;&lt;<span class="number">2</span>];</span><br><span class="line"><span class="type">int</span> head[N],ver[N&lt;&lt;<span class="number">1</span>],next[N&lt;&lt;<span class="number">1</span>],edge[N&lt;&lt;<span class="number">1</span>],tot=<span class="number">1</span>;<span class="comment">//储存有向图</span></span><br><span class="line"><span class="type">int</span> fa[N],dep[N],seg[N],siz[N],son[N],top[N];<span class="comment">//树剖必备 </span></span><br><span class="line"><span class="type">int</span> val[N],n,reb[N];<span class="type">char</span> op[<span class="number">5</span>];</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">add</span><span class="params">(ci&amp;x,ci&amp;y,ci&amp;k)</span></span>&#123;ver[++tot]=y;edge[tot]=k;next[tot]=head[x];head[x]=tot;&#125;<span class="comment">//加条边</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">dfs1</span><span class="params">(ci&amp;x)</span><span class="comment">//基本caozuo</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    siz[x]=<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> k=head[x],y;y=ver[k],k;k=next[k])</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(y==fa[x])<span class="keyword">continue</span>;</span><br><span class="line">        fa[y]=x;dep[y]=dep[x]+<span class="number">1</span>;<span class="comment">//更新fa[]与dep[]</span></span><br><span class="line">        val[y]=k;reb[k&gt;&gt;<span class="number">1</span>]=y;<span class="comment">//用val[x]代表x与fa[x]间的边,reb[k]表示标号为k的边在树上对应的节点</span></span><br><span class="line">        <span class="built_in">dfs1</span>(y);</span><br><span class="line">        <span class="keyword">if</span>(siz[son[x]]&lt;siz[y])son[x]=y;siz[x]+=siz[y];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">dfs2</span><span class="params">(ci&amp;x)</span><span class="comment">//同样的基本caozuo</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(!son[x])<span class="keyword">return</span>;</span><br><span class="line">    seg[son[x]]=++seg[<span class="number">0</span>];</span><br><span class="line">    top[son[x]]=top[x];<span class="built_in">dfs2</span>(son[x]);</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> k=head[x],y;y=ver[k],k;k=next[k])</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(y==fa[x]||y==son[x])<span class="keyword">continue</span>;</span><br><span class="line">        seg[y]=++seg[<span class="number">0</span>];</span><br><span class="line">        top[y]=y;<span class="built_in">dfs2</span>(y);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">update</span><span class="params">(ci&amp;p)</span><span class="comment">//更新节点 </span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    tree[p]=<span class="built_in">Node</span>(<span class="built_in">max</span>(tree[p&lt;&lt;<span class="number">1</span>].maxn,tree[p&lt;&lt;<span class="number">1</span>|<span class="number">1</span>].maxn),</span><br><span class="line">                 <span class="built_in">min</span>(tree[p&lt;&lt;<span class="number">1</span>].minn,tree[p&lt;&lt;<span class="number">1</span>|<span class="number">1</span>].minn),</span><br><span class="line">                 tree[p&lt;&lt;<span class="number">1</span>].sum+tree[p&lt;&lt;<span class="number">1</span>|<span class="number">1</span>].sum,tree[p].tag);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">pushdown</span><span class="params">(ci&amp;p,ci&amp;l,ci&amp;r)</span><span class="comment">//修改节点</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    tree[p]=<span class="built_in">Node</span>(-tree[p].minn,<span class="comment">//最大值 = -最小值</span></span><br><span class="line">                 -tree[p].maxn,<span class="comment">//最小值 = -最大值</span></span><br><span class="line">                 -tree[p].sum,tree[p].tag^<span class="number">1</span>);<span class="comment">//区间和 = -区间和，标记 ^= 1</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">spread</span><span class="params">(ci&amp;p,ci&amp;l,ci&amp;r)</span><span class="comment">//标记下传</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(!tree[p].tag)<span class="keyword">return</span>;tree[p].tag=<span class="number">0</span>;</span><br><span class="line">    <span class="type">int</span> mid=l+r&gt;&gt;<span class="number">1</span>;</span><br><span class="line">    <span class="built_in">pushdown</span>(p&lt;&lt;<span class="number">1</span>,l,mid);<span class="built_in">pushdown</span>(p&lt;&lt;<span class="number">1</span>|<span class="number">1</span>,mid+<span class="number">1</span>,r);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">change</span><span class="params">(ci&amp;x,ci&amp;k,ci&amp;p=<span class="number">1</span>,ci&amp;l=<span class="number">1</span>,ci&amp;r=n)</span><span class="comment">//单点修改权值</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(l==r)<span class="keyword">return</span> (<span class="type">void</span>)(tree[p]=<span class="built_in">Node</span>(k,k,k,<span class="number">0</span>));</span><br><span class="line">    <span class="type">int</span> mid=l+r&gt;&gt;<span class="number">1</span>;<span class="built_in">spread</span>(p,l,r);</span><br><span class="line">    <span class="keyword">if</span>(x&lt;=mid)<span class="built_in">change</span>(x,k,p&lt;&lt;<span class="number">1</span>,l,mid);</span><br><span class="line">    <span class="keyword">else</span> <span class="built_in">change</span>(x,k,p&lt;&lt;<span class="number">1</span>|<span class="number">1</span>,mid+<span class="number">1</span>,r);</span><br><span class="line">    <span class="built_in">update</span>(p);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">filp</span><span class="params">(ci&amp;x,ci&amp;y,ci&amp;p=<span class="number">1</span>,ci&amp;l=<span class="number">1</span>,ci&amp;r=n)</span><span class="comment">//区间 *= -1</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(x&lt;=l&amp;&amp;r&lt;=y)<span class="keyword">return</span> <span class="built_in">pushdown</span>(p,l,r);</span><br><span class="line">    <span class="type">int</span> mid=l+r&gt;&gt;<span class="number">1</span>;<span class="built_in">spread</span>(p,l,r);</span><br><span class="line">    <span class="keyword">if</span>(x&lt;=mid)<span class="built_in">filp</span>(x,y,p&lt;&lt;<span class="number">1</span>,l,mid);</span><br><span class="line">    <span class="keyword">if</span>(y&gt;mid)<span class="built_in">filp</span>(x,y,p&lt;&lt;<span class="number">1</span>|<span class="number">1</span>,mid+<span class="number">1</span>,r);</span><br><span class="line">    <span class="built_in">update</span>(p);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function">Node <span class="title">ask</span><span class="params">(ci&amp;x,ci&amp;y,ci&amp;p=<span class="number">1</span>,ci&amp;l=<span class="number">1</span>,ci&amp;r=n)</span><span class="comment">//区间查询</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(x&lt;=l&amp;&amp;r&lt;=y)<span class="keyword">return</span> tree[p];</span><br><span class="line">    <span class="type">int</span> mid=l+r&gt;&gt;<span class="number">1</span>;Node ans=<span class="built_in">Node</span>(-inf,inf,<span class="number">0</span>,<span class="number">0</span>);<span class="built_in">spread</span>(p,l,r);</span><br><span class="line">    <span class="keyword">if</span>(x&lt;=mid)ans=<span class="built_in">ask</span>(x,y,p&lt;&lt;<span class="number">1</span>,l,mid);</span><br><span class="line">    <span class="keyword">if</span>(y&gt;mid)ans=ans+<span class="built_in">ask</span>(x,y,p&lt;&lt;<span class="number">1</span>|<span class="number">1</span>,mid+<span class="number">1</span>,r);</span><br><span class="line">    <span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">operate</span><span class="params">(<span class="type">int</span> x,<span class="type">int</span> y)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">while</span>(top[x]!=top[y])</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(dep[top[x]]&lt;dep[top[y]])<span class="built_in">swap</span>(x,y);</span><br><span class="line">        <span class="built_in">filp</span>(seg[top[x]],seg[x]);</span><br><span class="line">        x=fa[top[x]];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(dep[x]&gt;dep[y])<span class="built_in">swap</span>(x,y);</span><br><span class="line">    <span class="keyword">if</span>(x!=y)<span class="built_in">filp</span>(seg[x]+<span class="number">1</span>,seg[y]);<span class="comment">//不能改LCA上的点</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function">Node <span class="title">query</span><span class="params">(<span class="type">int</span> x,<span class="type">int</span> y)</span><span class="comment">//路径查询</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    Node ans=<span class="built_in">Node</span>(-inf,inf,<span class="number">0</span>,<span class="number">0</span>);<span class="comment">//要初始化！！！ </span></span><br><span class="line">    <span class="keyword">while</span>(top[x]!=top[y])</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(dep[top[x]]&lt;dep[top[y]])<span class="built_in">swap</span>(x,y);</span><br><span class="line">        ans=ans+<span class="built_in">ask</span>(seg[top[x]],seg[x]);</span><br><span class="line">        x=fa[top[x]];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(dep[x]&gt;dep[y])<span class="built_in">swap</span>(x,y);</span><br><span class="line">    <span class="keyword">if</span>(x!=y)ans=ans+<span class="built_in">ask</span>(seg[x]+<span class="number">1</span>,seg[y]);<span class="comment">//LCA上的答案不能算~</span></span><br><span class="line">    <span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">signed</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc,<span class="type">char</span> **argv)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;n);</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>,x,y,k;i&lt;n;++i)</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">&quot;%d%d%d&quot;</span>,&amp;x,&amp;y,&amp;k),<span class="built_in">add</span>(x+<span class="number">1</span>,y+<span class="number">1</span>,k),<span class="built_in">add</span>(y+<span class="number">1</span>,x+<span class="number">1</span>,k);</span><br><span class="line">    dep[<span class="number">1</span>]=seg[<span class="number">0</span>]=seg[<span class="number">1</span>]=top[<span class="number">1</span>]=<span class="number">1</span>;</span><br><span class="line">    <span class="built_in">dfs1</span>(<span class="number">1</span>);<span class="built_in">dfs2</span>(<span class="number">1</span>);</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">2</span>;i&lt;=n;++i)</span><br><span class="line">        <span class="built_in">change</span>(seg[i],edge[val[i]]);</span><br><span class="line">    <span class="type">int</span> x,y,m;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d\n&quot;</span>,&amp;m);</span><br><span class="line">    <span class="keyword">while</span>(m--)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">&quot;%s%d%d&quot;</span>,op,&amp;x,&amp;y);</span><br><span class="line">        <span class="keyword">if</span>(*op==<span class="string">&#x27;C&#x27;</span>)</span><br><span class="line">            <span class="built_in">change</span>(seg[reb[x]],y);</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(*op==<span class="string">&#x27;N&#x27;</span>)</span><br><span class="line">            <span class="built_in">operate</span>(x+<span class="number">1</span>,y+<span class="number">1</span>);</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            Node ans=<span class="built_in">query</span>(x+<span class="number">1</span>,y+<span class="number">1</span>);</span><br><span class="line">            <span class="keyword">if</span>(*op==<span class="string">&#x27;S&#x27;</span>)</span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,ans.sum);</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(op[<span class="number">1</span>]==<span class="string">&#x27;A&#x27;</span>)</span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,ans.maxn);</span><br><span class="line">            <span class="keyword">else</span> <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,ans.minn);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+</details>
+
+</details>
+<ol start="2" type="1">
+<li><a target="_blank" rel="noopener" href="https://www.luogu.org/fe/problem/P2146">软件包管理器</a></li>
+</ol>
+<details class="note info no-icon"><summary><p>解法</p>
+</summary>
+<p>运用 <span class="math inline">\(dfs()\)</span> 的性质 <span class="math inline">\(\rightarrow\)</span> 以 <span class="math inline">\(x\)</span> 为根的子树在线段树中为 <span class="math display">\[[seg[x],seg[x]+siz[x]-1]\]</span></p>
+<p>时间复杂度 <span class="math inline">\(\Theta(Mlg^2N)\)</span></p>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.org/recordnew/show/14296083">AC记录</a></p>
+<details class="note info no-icon">
+<summary>
+<p>
+Code
+</p>
+<p></summary> <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> N (int)1e6+10</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="type">int</span> head[N],ver[N&lt;&lt;<span class="number">1</span>],next[N&lt;&lt;<span class="number">1</span>],tot;</span><br><span class="line"><span class="type">int</span> dep[N],fa[N],siz[N],son[N],top[N];</span><br><span class="line"><span class="type">int</span> seg[N],rev[N],sum[N&lt;&lt;<span class="number">2</span>];<span class="type">bool</span> tag[N&lt;&lt;<span class="number">2</span>],vis[N&lt;&lt;<span class="number">2</span>];</span><br><span class="line"><span class="type">int</span> n,m;<span class="type">char</span> op[<span class="number">10</span>];</span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="type">void</span> <span class="title">add</span><span class="params">(<span class="type">const</span> <span class="type">int</span>&amp;x,<span class="type">const</span> <span class="type">int</span>&amp;y)</span></span>&#123;ver[++tot]=y;next[tot]=head[x];head[x]=tot;&#125;</span><br><span class="line"><span class="comment">//---------------------------------------------------------------</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">dfs1</span><span class="params">(<span class="type">int</span> x)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    siz[x]=<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> k=head[x],y;y=ver[k],k;k=next[k])</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(y==fa[x])<span class="keyword">continue</span>;</span><br><span class="line">        dep[y]=dep[x]+<span class="number">1</span>;<span class="built_in">dfs1</span>(y);</span><br><span class="line">        <span class="keyword">if</span>(siz[son[x]]&lt;siz[y])son[x]=y;</span><br><span class="line">        siz[x]+=siz[y];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">dfs2</span><span class="params">(<span class="type">int</span> x)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(!son[x])<span class="keyword">return</span>;</span><br><span class="line">    seg[son[x]]=++seg[<span class="number">0</span>];top[son[x]]=top[x];</span><br><span class="line">    rev[seg[<span class="number">0</span>]]=son[x];<span class="built_in">dfs2</span>(son[x]);</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> k=head[x],y;y=ver[k],k;k=next[k])</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(y==fa[x]||y==son[x])<span class="keyword">continue</span>;</span><br><span class="line">        seg[y]=++seg[<span class="number">0</span>];top[y]=y;</span><br><span class="line">        rev[seg[<span class="number">0</span>]]=y;<span class="built_in">dfs2</span>(y);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//---------------------------------------------------------------</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">spread</span><span class="params">(<span class="type">int</span> p,<span class="type">int</span> l,<span class="type">int</span> r)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(!vis[p])<span class="keyword">return</span>;</span><br><span class="line">    <span class="type">int</span> mid=l+r&gt;&gt;<span class="number">1</span>;</span><br><span class="line">    sum[p&lt;&lt;<span class="number">1</span>]=tag[p]*(mid-l+<span class="number">1</span>);sum[p&lt;&lt;<span class="number">1</span>|<span class="number">1</span>]=tag[p]*(r-mid);</span><br><span class="line">    tag[p&lt;&lt;<span class="number">1</span>]=tag[p&lt;&lt;<span class="number">1</span>|<span class="number">1</span>]=tag[p];vis[p&lt;&lt;<span class="number">1</span>]=vis[p&lt;&lt;<span class="number">1</span>|<span class="number">1</span>]=<span class="literal">true</span>;vis[p]=<span class="literal">false</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">change</span><span class="params">(<span class="type">int</span> p,<span class="type">int</span> l,<span class="type">int</span> r,<span class="type">int</span> x,<span class="type">int</span> y,<span class="type">bool</span> val)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(x&lt;=l&amp;&amp;r&lt;=y)&#123;sum[p]=val*(r-l+<span class="number">1</span>);tag[p]=val;vis[p]=<span class="literal">true</span>;<span class="keyword">return</span>;&#125;</span><br><span class="line">    <span class="type">int</span> mid=l+r&gt;&gt;<span class="number">1</span>;<span class="built_in">spread</span>(p,l,r);</span><br><span class="line">    <span class="keyword">if</span>(x&lt;=mid)<span class="built_in">change</span>(p&lt;&lt;<span class="number">1</span>,l,mid,x,y,val);</span><br><span class="line">    <span class="keyword">if</span>(y&gt;mid)<span class="built_in">change</span>(p&lt;&lt;<span class="number">1</span>|<span class="number">1</span>,mid+<span class="number">1</span>,r,x,y,val);</span><br><span class="line">    sum[p]=sum[p&lt;&lt;<span class="number">1</span>]+sum[p&lt;&lt;<span class="number">1</span>|<span class="number">1</span>];</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">ask</span><span class="params">(<span class="type">int</span> p,<span class="type">int</span> l,<span class="type">int</span> r,<span class="type">int</span> x,<span class="type">int</span> y)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(x&lt;=l&amp;&amp;r&lt;=y)<span class="keyword">return</span> sum[p];</span><br><span class="line">    <span class="type">int</span> mid=l+r&gt;&gt;<span class="number">1</span>,ans=<span class="number">0</span>;<span class="built_in">spread</span>(p,l,r);</span><br><span class="line">    <span class="keyword">if</span>(x&lt;=mid)ans+=<span class="built_in">ask</span>(p&lt;&lt;<span class="number">1</span>,l,mid,x,y);</span><br><span class="line">    <span class="keyword">if</span>(y&gt;mid)ans+=<span class="built_in">ask</span>(p&lt;&lt;<span class="number">1</span>|<span class="number">1</span>,mid+<span class="number">1</span>,r,x,y);</span><br><span class="line">    <span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//---------------------------------------------------------------</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">install</span><span class="params">(<span class="type">int</span> x)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> fx=top[x],k=x,ans=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span>(fx!=<span class="number">1</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        ans+=<span class="built_in">ask</span>(<span class="number">1</span>,<span class="number">1</span>,seg[<span class="number">0</span>],seg[fx],seg[x]);</span><br><span class="line">        <span class="built_in">change</span>(<span class="number">1</span>,<span class="number">1</span>,seg[<span class="number">0</span>],seg[fx],seg[x],<span class="number">1</span>);</span><br><span class="line">        x=fa[fx],fx=top[x];</span><br><span class="line">    &#125;</span><br><span class="line">    ans+=<span class="built_in">ask</span>(<span class="number">1</span>,<span class="number">1</span>,seg[<span class="number">0</span>],<span class="number">1</span>,seg[x]);</span><br><span class="line">    <span class="built_in">change</span>(<span class="number">1</span>,<span class="number">1</span>,seg[<span class="number">0</span>],<span class="number">1</span>,seg[x],<span class="number">1</span>);</span><br><span class="line">    <span class="keyword">return</span> dep[k]-ans;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">uninstall</span><span class="params">(<span class="type">int</span> x)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> ans=<span class="number">0</span>;</span><br><span class="line">    ans+=<span class="built_in">ask</span>(<span class="number">1</span>,<span class="number">1</span>,seg[<span class="number">0</span>],seg[x],seg[x]+siz[x]<span class="number">-1</span>);</span><br><span class="line">    <span class="built_in">change</span>(<span class="number">1</span>,<span class="number">1</span>,seg[<span class="number">0</span>],seg[x],seg[x]+siz[x]<span class="number">-1</span>,<span class="number">0</span>);</span><br><span class="line">    <span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">signed</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;n);</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">2</span>;i&lt;=n;++i)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,fa+i);++fa[i];</span><br><span class="line">        <span class="built_in">add</span>(fa[i],i),<span class="built_in">add</span>(i,fa[i]);</span><br><span class="line">    &#125;</span><br><span class="line">    dep[<span class="number">1</span>]=rev[<span class="number">1</span>]=seg[<span class="number">0</span>]=seg[<span class="number">1</span>]=top[<span class="number">1</span>]=<span class="number">1</span>;</span><br><span class="line">    <span class="built_in">dfs1</span>(<span class="number">1</span>);<span class="built_in">dfs2</span>(<span class="number">1</span>);</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;m);<span class="type">int</span> x;</span><br><span class="line">    <span class="keyword">while</span>(m--)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">&quot;%s %d&quot;</span>,op,&amp;x);++x;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,*op==<span class="string">&#x27;i&#x27;</span>?<span class="built_in">install</span>(x):<span class="built_in">uninstall</span>(x));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+</details>
+
+</details>
+<link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>a999999
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://blog.jerryhzy.top/2019/06/23/%E9%87%8D%E9%93%BE%E5%89%96%E5%88%86/" title="重链剖分">https://blog.jerryhzy.top/2019/06/23/重链剖分/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Tutorial/" rel="tag"># Tutorial</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/11/15/%E6%89%B9%E5%88%A4%E6%80%A7%E6%80%9D%E7%BB%B4%E7%AC%94%E8%AE%B0/" rel="next" title="批判性思维笔记">
+                  批判性思维笔记 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  
+  <div class="comments giscus-container">
+  </div>
+  
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2023 – 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">a999999</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">25k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">1:32</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/1255985107" class="github-corner" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+<script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"1255985107/1255985107.github.io","repo_id":"R_kgDOKtqr_A","category":"General","category_id":"DIC_kwDOKtqr_M4Ca-LA","mapping":"pathname","reactions_enabled":1,"emit_metadata":0,"theme":"preferred_color_scheme","lang":"zh-CN","crossorigin":"anonymous","input_position":"top","loading":"lazy"}</script>
+
+<script>
+document.addEventListener('page:loaded', () => {
+  if (!CONFIG.page.comments) return;
+
+  NexT.utils.loadComments('.giscus-container')
+    .then(() => NexT.utils.getScript('https://giscus.app/client.js', {
+      attributes: {
+        async                   : true,
+        crossOrigin             : 'anonymous',
+        'data-repo'             : CONFIG.giscus.repo,
+        'data-repo-id'          : CONFIG.giscus.repo_id,
+        'data-category'         : CONFIG.giscus.category,
+        'data-category-id'      : CONFIG.giscus.category_id,
+        'data-mapping'          : CONFIG.giscus.mapping,
+        'data-reactions-enabled': CONFIG.giscus.reactions_enabled,
+        'data-emit-metadata'    : CONFIG.giscus.emit_metadata,
+        'data-theme'            : CONFIG.giscus.theme,
+        'data-lang'             : CONFIG.giscus.lang,
+        'data-input-position'   : CONFIG.giscus.input_position,
+        'data-loading'          : CONFIG.giscus.loading
+      },
+      parentNode: document.querySelector('.giscus-container')
+    }));
+});
+</script>
+
+</body>
+</html>

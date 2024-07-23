@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.0.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon_64x64_next.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon_16x16_next.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Serif+SC:300,300italic,400,400italic,700,700italic%7COxygen+Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.jerryhzy.top","root":"/","images":"/images","scheme":"Pisces","darkmode":true,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"default"},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"giscus","storage":true,"lazyload":true,"nav":null,"activeClass":"giscus"},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"manual","top_n_per_article":3,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Logic and Proofs">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="Discrete Mathematics Note Chapter 1">
+<meta property="og:url" content="https://blog.jerryhzy.top/2024/04/20/Discrete-Mathematics-Note-Chapter-1/index.html">
+<meta property="og:site_name" content="A999999&#39;s Blog">
+<meta property="og:description" content="Logic and Proofs">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-04-19T16:38:17.000Z">
+<meta property="article:modified_time" content="2024-05-03T07:57:54.061Z">
+<meta property="article:author" content="a999999">
+<meta property="article:tag" content="Discrete Mathematics">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://blog.jerryhzy.top/2024/04/20/Discrete-Mathematics-Note-Chapter-1/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://blog.jerryhzy.top/2024/04/20/Discrete-Mathematics-Note-Chapter-1/","path":"2024/04/20/Discrete-Mathematics-Note-Chapter-1/","title":"Discrete Mathematics Note Chapter 1"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Discrete Mathematics Note Chapter 1 | A999999's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">A999999's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-课程笔记"><a href="/note/" rel="section"><i class="fas fa-book fa-fw"></i>课程笔记</a></li><li class="menu-item menu-item-算法竞赛"><a href="/contest/" rel="section"><i class="fas fa-chart-simple fa-fw"></i>算法竞赛</a></li><li class="menu-item menu-item-友链"><a href="/friendlink/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-盘"><a href="http://pan.jerryhzy.top:5244/" rel="section" target="_blank"><i class="fas fa-cloud fa-fw"></i>盘</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#logic-and-proofs"><span class="nav-number">1.</span> <span class="nav-text">Logic and Proofs</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#propositional-logic"><span class="nav-number">1.1.</span> <span class="nav-text">Propositional Logic</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#proposition"><span class="nav-number">1.1.1.</span> <span class="nav-text">Proposition</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#truth-value"><span class="nav-number">1.1.2.</span> <span class="nav-text">Truth value</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#logical-operators-connectives"><span class="nav-number">1.1.3.</span> <span class="nav-text">Logical operators (Connectives)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#negation-not"><span class="nav-number">1.1.3.1.</span> <span class="nav-text">Negation (Not)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#conjunction-and"><span class="nav-number">1.1.3.2.</span> <span class="nav-text">Conjunction (And)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#disjunction-inclusive-or"><span class="nav-number">1.1.3.3.</span> <span class="nav-text">Disjunction (Inclusive Or)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#exclusive-or-xor"><span class="nav-number">1.1.3.4.</span> <span class="nav-text">Exclusive Or (Xor)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#conditional-operator-if-then"><span class="nav-number">1.1.3.5.</span> <span class="nav-text">Conditional Operator (If-then)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#biconditional-operator"><span class="nav-number">1.1.3.6.</span> <span class="nav-text">Biconditional Operator</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#precedence"><span class="nav-number">1.1.3.7.</span> <span class="nav-text">Precedence</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#truth-table"><span class="nav-number">1.1.4.</span> <span class="nav-text">Truth Table</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#applications-of-propositional-logic"><span class="nav-number">1.2.</span> <span class="nav-text">Applications of Propositional Logic</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#propositional-equivalences"><span class="nav-number">1.3.</span> <span class="nav-text">Propositional Equivalences</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#compound-propositions"><span class="nav-number">1.3.1.</span> <span class="nav-text">Compound Propositions</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#logical-equivalence"><span class="nav-number">1.3.2.</span> <span class="nav-text">Logical Equivalence</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#already-proved-equivalence"><span class="nav-number">1.3.3.</span> <span class="nav-text">Already proved equivalence</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#propositional-satisfiability"><span class="nav-number">1.3.4.</span> <span class="nav-text">Propositional Satisfiability</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#predicates-and-quantifiers"><span class="nav-number">1.4.</span> <span class="nav-text">Predicates and Quantifiers</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#predicate"><span class="nav-number">1.4.1.</span> <span class="nav-text">Predicate</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#universal-quantification"><span class="nav-number">1.4.2.</span> <span class="nav-text">Universal Quantification</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#existential-quantification"><span class="nav-number">1.4.3.</span> <span class="nav-text">Existential Quantification</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#binding-variables"><span class="nav-number">1.4.4.</span> <span class="nav-text">Binding Variables</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#logical-equivalences-involving-quantifiers"><span class="nav-number">1.4.5.</span> <span class="nav-text">Logical Equivalences Involving Quantifiers</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#some-useful-equivalence"><span class="nav-number">1.4.5.1.</span> <span class="nav-text">Some useful equivalence</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#nested-quantifiers"><span class="nav-number">1.5.</span> <span class="nav-text">Nested Quantifiers</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rules-of-inference"><span class="nav-number">1.6.</span> <span class="nav-text">Rules of Inference</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#valid-arguments"><span class="nav-number">1.6.1.</span> <span class="nav-text">Valid Arguments</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#rules-of-inference-1"><span class="nav-number">1.6.2.</span> <span class="nav-text">Rules of Inference</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#introduction-of-proofs"><span class="nav-number">1.7.</span> <span class="nav-text">Introduction of Proofs</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#terms"><span class="nav-number">1.7.1.</span> <span class="nav-text">Terms</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#direct-proof"><span class="nav-number">1.7.2.</span> <span class="nav-text">Direct Proof</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#contraposition-proof"><span class="nav-number">1.7.3.</span> <span class="nav-text">Contraposition Proof</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#vacuous-proof"><span class="nav-number">1.7.4.</span> <span class="nav-text">Vacuous Proof</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#trivial-proof"><span class="nav-number">1.7.5.</span> <span class="nav-text">Trivial Proof</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#contradiction"><span class="nav-number">1.7.6.</span> <span class="nav-text">Contradiction</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#proofs-of-equivalence"><span class="nav-number">1.7.7.</span> <span class="nav-text">Proofs of Equivalence</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#proof-methods-and-strategy"><span class="nav-number">1.8.</span> <span class="nav-text">Proof Methods and Strategy</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#proof-by-cases"><span class="nav-number">1.8.1.</span> <span class="nav-text">Proof by Cases</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#existence-proof"><span class="nav-number">1.8.2.</span> <span class="nav-text">Existence Proof</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#uniqueness-proof"><span class="nav-number">1.8.3.</span> <span class="nav-text">Uniqueness Proof</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#backward-reasoning"><span class="nav-number">1.8.4.</span> <span class="nav-text">Backward Reasoning</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#additional-methods-of-proofs"><span class="nav-number">1.8.5.</span> <span class="nav-text">Additional Methods of Proofs</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="a999999"
+      src="/images/Yamada_Ryo3.jpg">
+  <p class="site-author-name" itemprop="name">a999999</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/1255985107" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;1255985107" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:jerryhzy@outlook.com" title="E-Mail → mailto:jerryhzy@outlook.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://blog.jerryhzy.top/2024/04/20/Discrete-Mathematics-Note-Chapter-1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/Yamada_Ryo3.jpg">
+      <meta itemprop="name" content="a999999">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="A999999's Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Discrete Mathematics Note Chapter 1 | A999999's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Discrete Mathematics Note Chapter 1
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-04-20 00:38:17" itemprop="dateCreated datePublished" datetime="2024-04-20T00:38:17+08:00">2024-04-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-05-03 15:57:54" itemprop="dateModified" datetime="2024-05-03T15:57:54+08:00">2024-05-03</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/note/" itemprop="url" rel="index"><span itemprop="name">note</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.5k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>6 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="logic-and-proofs">Logic and Proofs</h1>
+<span id="more"></span>
+<h2 id="propositional-logic">Propositional Logic</h2>
+<h3 id="proposition">Proposition</h3>
+<p>Definition: A <strong>proposition</strong> is a declarative sentence that is either <strong>true</strong> or <strong>false</strong>, but not both.</p>
+<h3 id="truth-value">Truth value</h3>
+<p>Big <span class="math inline">\(\mathrm{T}\)</span> for <strong>true</strong> and big <span class="math inline">\(\mathrm{F}\)</span> for <strong>false</strong>.</p>
+<h3 id="logical-operators-connectives">Logical operators (Connectives)</h3>
+<h4 id="negation-not">Negation (Not)</h4>
+<p>The <strong>negation</strong> of <span class="math inline">\(p\)</span>, <span class="math inline">\(\lnot p\)</span>, is the proposition "It is not the case that <span class="math inline">\(p\)</span>."</p>
+<h4 id="conjunction-and">Conjunction (And)</h4>
+<p>The <strong>conjunction</strong> of <span class="math inline">\(p\)</span> and <span class="math inline">\(q\)</span>, is the proposition "<span class="math inline">\(p\)</span> and <span class="math inline">\(q\)</span>."</p>
+<h4 id="disjunction-inclusive-or">Disjunction (Inclusive Or)</h4>
+<p>The <strong>disjunction</strong> of <span class="math inline">\(p\)</span> and <span class="math inline">\(q\)</span>, is the proposition "<span class="math inline">\(p\)</span> or <span class="math inline">\(q\)</span>."</p>
+<h4 id="exclusive-or-xor">Exclusive Or (Xor)</h4>
+<p>The <strong>exclusive or</strong> of <span class="math inline">\(p\)</span> and <span class="math inline">\(q\)</span>, is the proposition "<span class="math inline">\(p\)</span> or <span class="math inline">\(q\)</span>, but not both."</p>
+<h4 id="conditional-operator-if-then">Conditional Operator (If-then)</h4>
+<p>The <strong>conditional statement</strong> of <span class="math inline">\(p\)</span> and <span class="math inline">\(q\)</span>, is the proposition "if <span class="math inline">\(p\)</span>, then <span class="math inline">\(q\)</span>."</p>
+<p><span class="math inline">\(p \rightarrow q\)</span> is false <strong>only</strong> when <span class="math inline">\(p\)</span> is true and <span class="math inline">\(q\)</span> is false.</p>
+<p>Converse: <span class="math inline">\(q \rightarrow p\)</span> Inverse: <span class="math inline">\(\lnot p \rightarrow \lnot q\)</span> Contrapositive: <span class="math inline">\(\lnot q \rightarrow \lnot p\)</span>.</p>
+<h4 id="biconditional-operator">Biconditional Operator</h4>
+<p>The <strong>biconditional statement</strong> of <span class="math inline">\(p\)</span> and <span class="math inline">\(q\)</span>, is the proposition "<span class="math inline">\(p\)</span> if and only if <span class="math inline">\(q\)</span>."</p>
+<h4 id="precedence">Precedence</h4>
+<p><span class="math inline">\(\lnot &gt; \land &gt; \lor &gt; \rightarrow &gt; \leftrightarrow\)</span>.</p>
+<h3 id="truth-table">Truth Table</h3>
+<p>Columns display variables and propositions; Rows display different cases.</p>
+<p>For <span class="math inline">\(n\)</span> variables, there will be <span class="math inline">\(2^n\)</span> rows.</p>
+<h2 id="applications-of-propositional-logic">Applications of Propositional Logic</h2>
+<p>System specification: Express English sentences in logical statements.</p>
+<p>Consistent system specification: A list of propositions is <strong>consistent</strong> if it is possible to assign truth values to the proposition variables so that each proposition is true.</p>
+<h2 id="propositional-equivalences">Propositional Equivalences</h2>
+<h3 id="compound-propositions">Compound Propositions</h3>
+<p>​ <strong>Tautology</strong>: statement that is <strong>always</strong> true.</p>
+<p>​ <strong>Contradiction</strong>: statement that is <strong>always</strong> false.</p>
+<p>​ <strong>Contingency</strong>: its value depends.</p>
+<h3 id="logical-equivalence">Logical Equivalence</h3>
+<p>Propositions <span class="math inline">\(p\)</span> and <span class="math inline">\(q\)</span> are called <strong>logically equivalent</strong> if <span class="math inline">\(p \leftrightarrow q\)</span> is a tautology. This case can be denoted as <span class="math inline">\(p \Leftrightarrow q\)</span>, or <span class="math inline">\(p \equiv q\)</span>.</p>
+<h3 id="already-proved-equivalence">Already proved equivalence</h3>
+<table>
+<colgroup>
+<col style="width: 75%" />
+<col style="width: 24%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Laws</th>
+<th>Law Names</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(p \land \mathrm{\mathrm{T}} \equiv p\)</span>, <span class="math inline">\(p \lor \mathrm{F} \equiv p\)</span></td>
+<td>Identity laws</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(p \land \mathrm{F} \equiv \mathrm{F}\)</span>, <span class="math inline">\(p \lor \mathrm{T} \equiv \mathrm{T}\)</span></td>
+<td>Domination laws</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(p \lor p \equiv p, p \land p \equiv p\)</span></td>
+<td>Idempotent laws</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\lnot (\lnot p) \equiv p\)</span></td>
+<td>Double negation law</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(p \land q \equiv q \land p, \\ p \lor q \equiv q \lor p\)</span></td>
+<td>Commutative laws</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(p \lor (q \lor r) \equiv (p \lor q) \lor r,\\ p \land (q \land r) \equiv (p \land q) \land r\)</span></td>
+<td>Associative laws</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(p \lor (q \land r) \equiv (p \lor q) \land (p \lor r),\\ p \land (q \lor r) \equiv (p \land q) \lor (p \land r)\)</span></td>
+<td>Distributive laws</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\lnot (p \land q) \equiv \lnot p \lor \lnot q,\\ \lnot (p \lor q) \equiv \lnot p \land \lnot q\)</span></td>
+<td>De Morgan's laws</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(p \lor (p \land q) \equiv p,\\ p \land (p \lor q) \equiv p\)</span></td>
+<td>Absorption laws</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(p \lor \lnot p \equiv \mathrm{T}, p \land \lnot p \equiv \mathrm{F}\)</span></td>
+<td>Negation laws</td>
+</tr>
+</tbody>
+</table>
+<p>The operator <span class="math inline">\(\downarrow\)</span> is called <strong>Peirce arrow</strong>, and stands for <span class="math inline">\(Nor\)</span> operation. It's functional complete, and we have:</p>
+<ol type="1">
+<li><span class="math inline">\(p \downarrow p \equiv \lnot p\)</span>.</li>
+<li><span class="math inline">\((p\downarrow q) \downarrow (p \downarrow q) \equiv p \lor q\)</span>.</li>
+<li><span class="math inline">\((p \downarrow p) \downarrow (q \downarrow q) \equiv p \land q\)</span>.</li>
+</ol>
+<h3 id="propositional-satisfiability">Propositional Satisfiability</h3>
+<p>A compound proposition is <strong>satisfiable</strong> if there is an assignment to all variables that make it true.</p>
+<p>If it is a contradiction, it is called <strong>unsatisfiable</strong>.</p>
+<h2 id="predicates-and-quantifiers">Predicates and Quantifiers</h2>
+<h3 id="predicate">Predicate</h3>
+<p>A <strong>predicate</strong> is a statement that contains variables. Once the variables' values are set, its truth value is set too.</p>
+<h3 id="universal-quantification">Universal Quantification</h3>
+<p>A <strong>universal quantification</strong> of <span class="math inline">\(P(x)\)</span>, denoted by <span class="math inline">\(\forall x\ P(x)\)</span>, is the statement that "<span class="math inline">\(P(x)\)</span> is true for all x in the domain."</p>
+<p>It's equivalent of <span class="math inline">\(\bigcap\limits_{x \in D} P(x)\)</span>.</p>
+<h3 id="existential-quantification">Existential Quantification</h3>
+<p>An <strong>existential quantification</strong> of <span class="math inline">\(P(x)\)</span>, denoted by <span class="math inline">\(\exists x\ P(x)\)</span>, is the statement that "<span class="math inline">\(P(x)\)</span> is true for at least one x in the domain".</p>
+<p>It's equivalent of <span class="math inline">\(\bigcup\limits_{x \in D} P(x)\)</span>.</p>
+<h3 id="binding-variables">Binding Variables</h3>
+<p>A variable constrained by quantifiers is called <strong>bound variable</strong>. Otherwise, it's called <strong>Free variable</strong>.</p>
+<p>Constants are not in any of the two types.</p>
+<h3 id="logical-equivalences-involving-quantifiers">Logical Equivalences Involving Quantifiers</h3>
+<p>Two statements are logically equivalent <span class="math inline">\(\mathrm{iff}\)</span> they have the same truth value when predicates specified in the same set of values.</p>
+<h4 id="some-useful-equivalence">Some useful equivalence</h4>
+<p><span class="math inline">\(\forall x (A(x) \land B(x)) \equiv \forall x A(x) \land \forall x B(x)\)</span>.</p>
+<p><span class="math inline">\(\exists x (A(x) \lor B(x)) \equiv \exists x A(x) \lor \exists x B(x)\)</span>.</p>
+<p><span class="math inline">\(\lnot \forall x P(x) \equiv \exists x \lnot P(x)\)</span>.</p>
+<p><span class="math inline">\(\lnot \exists x P(x) \equiv \forall x \lnot P(x)\)</span>.</p>
+<p><span class="math inline">\(\forall x(P(x) \rightarrow A) \equiv \exists x P(x) \rightarrow A\)</span>.</p>
+<p><span class="math inline">\(\forall x(A \rightarrow P(x)) \equiv A \rightarrow \forall x P(x)\)</span>.</p>
+<h2 id="nested-quantifiers">Nested Quantifiers</h2>
+<p>Two quantifiers are <strong>nested</strong> if one is within the scope of the other.</p>
+<p>The order of nested quantifiers <strong>matters</strong> when they are of <strong>different</strong> types.</p>
+<h2 id="rules-of-inference">Rules of Inference</h2>
+<h3 id="valid-arguments">Valid Arguments</h3>
+<p>An <strong>argument</strong> in propositional logic is a sequence of statements that end with a conclusion.</p>
+<p><strong>Valid arguments</strong> are called proofs. <strong>Valid</strong> means the preceding statements determines the truth of the conclusion.</p>
+<p>An <strong>argument form</strong> in propositional logic is a sequence of compound propositions involving propositional variables.</p>
+<p><strong>Valid argument forms</strong> are those whose value is true once their premises are all true in propositional variables forms.</p>
+<p>An argument's validity is identical with its form's validity.</p>
+<p>To prove validity:</p>
+<blockquote>
+<ol type="1">
+<li>Assume all premises are true</li>
+<li>Use the rules of inference and logical equivalence to determine that the conclusion is true</li>
+</ol>
+</blockquote>
+<h3 id="rules-of-inference-1">Rules of Inference</h3>
+<p><strong>Rules of inference</strong> are simple argument forms whose correctness can be established with truth tables.</p>
+<table>
+<colgroup>
+<col style="width: 56%" />
+<col style="width: 43%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Rules</th>
+<th>Rule Names</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\((p\ \land\ (p\rightarrow q)) \rightarrow q\)</span></td>
+<td>Modus ponens<br />(mode that affirms in Latin)</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\((\lnot q\ \land\ (p \rightarrow q)) \rightarrow \lnot p\)</span></td>
+<td>Modus tollens<br />(mode the denies in Latin)</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(((p \rightarrow q)\ \land\ (q \rightarrow r)) \rightarrow (p \rightarrow r)\)</span></td>
+<td>Hypothetical Syllogism</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(((p \lor q) \land \lnot p) \rightarrow q\)</span></td>
+<td>Disjunctive Syllogism</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(p \rightarrow (p \lor q)\)</span></td>
+<td>Addition</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\((p \land q ) \rightarrow p\)</span></td>
+<td>Simplification</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(((p \lor q)\ \land\ (\lnot p \lor r)) \rightarrow (q \lor r)\)</span></td>
+<td>Resolution</td>
+</tr>
+</tbody>
+</table>
+<p>Adding quantifiers, we have another table.</p>
+<table>
+<colgroup>
+<col style="width: 69%" />
+<col style="width: 30%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Rules</th>
+<th>Rule Names</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(\dfrac{\forall x P(x)}{\therefore P(c)}\)</span></td>
+<td>Universal instantiation</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\dfrac{P(c)\ \mathrm{for\ any\ } c}{\therefore \forall x P(x)}\)</span></td>
+<td>Universal generalization</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(\dfrac{\exists x P(x)}{\therefore P(c)\ \mathrm{for\ some\ } c}\)</span></td>
+<td>Existential instantiation</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\dfrac{P(c)\ \mathrm{for\ some\ } c}{\therefore \exists x P(x)}\)</span></td>
+<td>Existential generalization</td>
+</tr>
+</tbody>
+</table>
+<p>If you deny the premises to prove the negation of conclusion, or affirm the conclusion to prove the premises, then you may walk in the trap of <strong>fallacy</strong>.</p>
+<h2 id="introduction-of-proofs">Introduction of Proofs</h2>
+<blockquote>
+<p>The construction of a valid proof is an art, honed after much practice.</p>
+</blockquote>
+<h3 id="terms">Terms</h3>
+<p>A <strong>proof</strong> is valid argument establishes the truth of a mathematical statement.</p>
+<p>A <strong>theorem</strong> is a statement shown true.</p>
+<p>A <strong>axiom</strong> is a statement we assume to be true.</p>
+<p>A <strong>lemma</strong> is a less important theorem helpful in proving.</p>
+<p>A <strong>corollary</strong> is a derived lemma from theorems.</p>
+<p>A <strong>conjecture</strong> is a guess statement that is being proposed to be true. It becomes a theorem once it has been proved true.</p>
+<h3 id="direct-proof">Direct Proof</h3>
+<p><span class="math inline">\(\forall x (P(x) \rightarrow Q(x)) \Leftrightarrow P(c) \rightarrow Q(c)\)</span> for arbitrary <span class="math inline">\(c\)</span>.</p>
+<p><span class="math inline">\(\rightarrow:\)</span> Universal instantiation</p>
+<p><span class="math inline">\(\leftarrow:\)</span> Universal generalization</p>
+<p>Assume <span class="math inline">\(P(x)\)</span> is true, and use rules and other theorems to reach <span class="math inline">\(Q(x)\)</span>.</p>
+<h3 id="contraposition-proof">Contraposition Proof</h3>
+<p><span class="math display">\[
+P \rightarrow Q \equiv \lnot Q \rightarrow \lnot P
+\]</span></p>
+<p>So we can assume <span class="math inline">\(\lnot Q(x)\)</span> is true, and then try to reach <span class="math inline">\(\lnot P(x)\)</span>.</p>
+<h3 id="vacuous-proof">Vacuous Proof</h3>
+<p>If we know <span class="math inline">\(P\)</span> is false then <span class="math inline">\(P \rightarrow Q\)</span> is <strong>vacuously</strong> true.</p>
+<h3 id="trivial-proof">Trivial Proof</h3>
+<p>If we know <span class="math inline">\(Q\)</span> is true then <span class="math inline">\(P \rightarrow Q\)</span> is <strong>trivial</strong> true.</p>
+<h3 id="contradiction">Contradiction</h3>
+<p>Try to prove <span class="math inline">\(p\)</span>, we can assume <span class="math inline">\(p\)</span> is false, and then deduce <span class="math inline">\(p \rightarrow (q \vee \lnot q )\)</span>.</p>
+<p>Another form: For <span class="math inline">\(p \rightarrow q\)</span>, we can assume <span class="math inline">\(\lnot q \wedge p\)</span>, and then deduce <span class="math inline">\((\lnot q \wedge p) \rightarrow (t \wedge \lnot t)\)</span>.</p>
+<h3 id="proofs-of-equivalence">Proofs of Equivalence</h3>
+<p>To show <span class="math inline">\(p_1, p_2, \ldots, p_n\)</span> are equivalent, we can prove that <span class="math inline">\(p_1 \rightarrow p_2 \rightarrow \cdots \rightarrow p_n\)</span>, and then prove <span class="math inline">\(p_n \rightarrow p_1\)</span>.</p>
+<h2 id="proof-methods-and-strategy">Proof Methods and Strategy</h2>
+<h3 id="proof-by-cases">Proof by Cases</h3>
+<p>Break the premise <span class="math inline">\(p\)</span> into <span class="math inline">\(p_1, p_2, \ldots p_n\)</span>. And prove that <span class="math inline">\(p_i \rightarrow q\)</span> for all <span class="math inline">\(i\)</span>.</p>
+<p>Finally we have <span class="math inline">\((\bigwedge (p_i \rightarrow q)) \leftrightarrow ((\bigvee p_i) \rightarrow q)\)</span>.</p>
+<h3 id="existence-proof">Existence Proof</h3>
+<p>To prove <span class="math inline">\(\exists x P(x)\)</span>.</p>
+<p>Constructive</p>
+<ol type="1">
+<li>Establish <span class="math inline">\(P(c)\)</span> is <span class="math inline">\(\mathrm{T}\)</span> for some <span class="math inline">\(c\)</span>.</li>
+<li>Use Existential Generalization, <span class="math inline">\(\exists x P(x)\)</span> is true.</li>
+</ol>
+<p>Nonconstructive</p>
+<ol type="1">
+<li>Assume no <span class="math inline">\(c\)</span> exists that <span class="math inline">\(P(c)\)</span> is <span class="math inline">\(\mathrm{T}\)</span>.</li>
+<li>Find a contradiction.</li>
+</ol>
+<h3 id="uniqueness-proof">Uniqueness Proof</h3>
+<p>To prove <span class="math inline">\(\exists x (P(x) \wedge \forall y (y \neq x \rightarrow \lnot P(y)))\)</span>.</p>
+<ol type="1">
+<li>Prove existence of qualified <span class="math inline">\(x\)</span>.</li>
+<li>Prove that <span class="math inline">\(y \neq x \rightarrow \lnot P(y)\)</span>, or prove <span class="math inline">\((P(x) \wedge P(y)) \rightarrow x = y\)</span>.</li>
+</ol>
+<h3 id="backward-reasoning">Backward Reasoning</h3>
+<p>To prove a statement <span class="math inline">\(q\)</span>, we try to find a provable statement <span class="math inline">\(p\)</span> that <span class="math inline">\(p \rightarrow q\)</span> holds.</p>
+<p>By using this method recursively, we may finally reach those given premises.</p>
+<h3 id="additional-methods-of-proofs">Additional Methods of Proofs</h3>
+<ul>
+<li><p>Mathematical induction</p></li>
+<li><p>Structural induction</p></li>
+<li><p>The Cantor diagonalization argument</p></li>
+<li><p>Combinatorial proofs</p></li>
+</ul>
+<link rel="stylesheet" href="/css/spoiler.css" type="text/css"><script src="/js/spoiler.js" type="text/javascript" async></script>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>a999999
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://blog.jerryhzy.top/2024/04/20/Discrete-Mathematics-Note-Chapter-1/" title="Discrete Mathematics Note Chapter 1">https://blog.jerryhzy.top/2024/04/20/Discrete-Mathematics-Note-Chapter-1/</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Discrete-Mathematics/" rel="tag"># Discrete Mathematics</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/04/16/CCPC-Final-2023-J-Solution/" rel="prev" title="CCPC Final 2023 J Solution">
+                  <i class="fa fa-angle-left"></i> CCPC Final 2023 J Solution
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/05/01/Codeforces-Round-942-Div-1-Solution/" rel="next" title="Codeforces Round 942 (Div. 1) Solution">
+                  Codeforces Round 942 (Div. 1) Solution <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  
+  <div class="comments giscus-container">
+  </div>
+  
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2023 – 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">a999999</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">25k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">1:32</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/1255985107" class="github-corner" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+<script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"1255985107/1255985107.github.io","repo_id":"R_kgDOKtqr_A","category":"General","category_id":"DIC_kwDOKtqr_M4Ca-LA","mapping":"pathname","reactions_enabled":1,"emit_metadata":0,"theme":"preferred_color_scheme","lang":"zh-CN","crossorigin":"anonymous","input_position":"top","loading":"lazy"}</script>
+
+<script>
+document.addEventListener('page:loaded', () => {
+  if (!CONFIG.page.comments) return;
+
+  NexT.utils.loadComments('.giscus-container')
+    .then(() => NexT.utils.getScript('https://giscus.app/client.js', {
+      attributes: {
+        async                   : true,
+        crossOrigin             : 'anonymous',
+        'data-repo'             : CONFIG.giscus.repo,
+        'data-repo-id'          : CONFIG.giscus.repo_id,
+        'data-category'         : CONFIG.giscus.category,
+        'data-category-id'      : CONFIG.giscus.category_id,
+        'data-mapping'          : CONFIG.giscus.mapping,
+        'data-reactions-enabled': CONFIG.giscus.reactions_enabled,
+        'data-emit-metadata'    : CONFIG.giscus.emit_metadata,
+        'data-theme'            : CONFIG.giscus.theme,
+        'data-lang'             : CONFIG.giscus.lang,
+        'data-input-position'   : CONFIG.giscus.input_position,
+        'data-loading'          : CONFIG.giscus.loading
+      },
+      parentNode: document.querySelector('.giscus-container')
+    }));
+});
+</script>
+
+</body>
+</html>
